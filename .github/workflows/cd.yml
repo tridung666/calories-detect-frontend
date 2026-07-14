@@ -125,20 +125,41 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
+          port: ${{ secrets.VPS_SSH_PORT }}
           key: ${{ secrets.VPS_SSH_KEY }}
 
           script: |
+            set -e
+
             cd /opt/calories-detect
 
             DEPLOY_TAG="${{ needs.docker.outputs.deploy_tag }}"
 
+            echo "Deploy tag: $DEPLOY_TAG"
+            echo "Current directory:"
+            pwd
+
             if grep -q '^FRONTEND_TAG=' .env; then
+              echo "FRONTEND_TAG exists. Updating..."
               sed -i "s|^FRONTEND_TAG=.*|FRONTEND_TAG=$DEPLOY_TAG|" .env
             else
+              echo "FRONTEND_TAG does not exist. Creating..."
               echo "FRONTEND_TAG=$DEPLOY_TAG" >> .env
             fi
 
+            echo "Current FRONTEND_TAG:"
+            grep '^FRONTEND_TAG=' .env
+
+            echo "Compose services:"
+            docker compose config --services
+
+            echo "Pulling frontend image..."
             docker compose pull frontend
+
+            echo "Starting frontend container..."
             docker compose up -d frontend
+
+            echo "Frontend container status:"
+            docker compose ps frontend
 
             docker image prune -f
