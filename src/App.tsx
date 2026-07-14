@@ -122,7 +122,7 @@ export const App = () => {
         <div className="register-demo__header">
           <p className="register-demo__eyebrow">API Demo</p>
           <h1>Register API</h1>
-          <p>POST /auth/register</p>
+          <p>POST /api/auth/register</p>
         </div>
 
         <form className="register-demo__form" onSubmit={handleSubmit}>
