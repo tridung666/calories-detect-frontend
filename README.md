@@ -4,12 +4,13 @@ React and TypeScript frontend built with Vite and served by Nginx in production.
 
 ## API routing
 
-The browser uses the same-origin `/api` prefix. The public reverse proxy must
-forward `/api/` to the Spring Boot service while removing that prefix.
+The browser uses the same-origin `/api` prefix. The Nginx runtime forwards
+`/api/*` to the Spring Boot Docker Compose service named `backend` on port
+`8080`, preserving the complete request path.
 
 ```nginx
 location /api/ {
-    proxy_pass http://127.0.0.1:8080/;
+    proxy_pass http://backend:8080$request_uri;
 }
 ```
 
@@ -26,8 +27,8 @@ npm ci
 npm run dev
 ```
 
-Vite proxies `/api/*` to `API_PROXY_TARGET` and removes `/api`, matching the
-production reverse-proxy behavior.
+Vite proxies `/api/*` to `API_PROXY_TARGET` while preserving `/api`, matching
+the production Nginx behavior and the backend endpoint paths.
 
 ## Verification
 
