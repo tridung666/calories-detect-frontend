@@ -1,0 +1,14 @@
+{
+  "title": "User management",
+  "description": "Manage accounts and access permissions.",
+  "add": "Add user",
+  "all": "All users",
+  "count_one": "{{count, number}} account",
+  "count_other": "{{count, number}} accounts",
+  "emptyTitle": "No users on this page",
+  "emptyDescription": "Add an account or return to the previous page.",
+  "createDescription": "Create an account and choose the appropriate access permissions.",
+  "roleHint": "Administrators can view and create users.",
+  "create": "Create user",
+  "created": "User created"
+}

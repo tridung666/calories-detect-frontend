@@ -1,0 +1,87 @@
+{
+  "description": "Every meal, every day. Record and track your nutrition.",
+  "add": "Add meal",
+  "create": "Create meal",
+  "edit": "Edit meal",
+  "editTitle": "Edit meal",
+  "date": "Meal date",
+  "type": "Meal type",
+  "meal": "Meal",
+  "all": "All meals",
+  "list": "Meal list",
+  "count_one": "{{count, number}} meal",
+  "count_other": "{{count, number}} meals",
+  "types": {
+    "BREAKFAST": "Breakfast",
+    "LUNCH": "Lunch",
+    "DINNER": "Dinner",
+    "SNACK": "Snack"
+  },
+  "empty": {
+    "filteredTitle": "No matching meals",
+    "filteredDescription": "Try another date or meal type.",
+    "title": "Start with your first meal",
+    "description": "Add a meal and the foods you ate to start tracking your nutrition."
+  },
+  "delete": {
+    "title": "Delete meal?",
+    "description": "The meal on {{date}} and all its foods will be deleted. This cannot be undone."
+  },
+  "formDescription": "Choose a date and meal type. You can add foods after saving.",
+  "detail": {
+    "invalidTitle": "Invalid meal",
+    "invalidDescription": "Please select a meal from your diary.",
+    "back": "Back to diary",
+    "description_one": "{{date}} · {{count, number}} food",
+    "description_other": "{{date}} · {{count, number}} foods",
+    "foods": "Foods in this meal",
+    "nutritionHint": "Nutrition is calculated for the entire recorded portion.",
+    "emptyTitle": "This meal has no foods yet",
+    "emptyDescription": "Add foods and portion sizes to see the meal’s total nutrition.",
+    "firstFood": "Add your first food"
+  },
+  "table": {
+    "view": "View {{meal}} on {{date}}",
+    "edit": "Edit {{meal}} on {{date}}",
+    "delete": "Delete {{meal}} on {{date}}"
+  },
+  "items": {
+    "add": "Add food",
+    "edit": "Edit food",
+    "deleteTitle": "Delete food?",
+    "deleteDescription": "“{{name}}” will be removed from the meal. This cannot be undone.",
+    "formDescription": "Enter nutrition for the entire portion you ate, rather than per 100 g.",
+    "name": "Food name",
+    "namePlaceholder": "For example: Chicken rice",
+    "normalizedName": "Standardized name (optional)",
+    "normalizedPlaceholder": "Name used to identify the food",
+    "quantity": "Portion weight (g)",
+    "food": "Food",
+    "weight": "Weight",
+    "grams": "{{value}} g"
+  },
+  "nutrition": {
+    "calories": "Calories",
+    "protein": "Protein",
+    "carbohydrates": "Carbohydrates",
+    "fat": "Fat",
+    "caloriesWithUnit": "Calories (kcal)",
+    "proteinWithUnit": "Protein (g)",
+    "carbohydratesWithUnit": "Carbohydrates (g)",
+    "fatWithUnit": "Fat (g)",
+    "proteinShort": "Protein (g)",
+    "fatShort": "Fat (g)"
+  },
+  "units": {
+    "kcal": "kcal",
+    "grams": "g"
+  },
+  "notifications": {
+    "created": "Meal created",
+    "updated": "Meal updated",
+    "deleted": "Meal deleted",
+    "itemCreated": "Food added",
+    "itemUpdated": "Food updated",
+    "itemDeleted": "Food deleted"
+  }
+}

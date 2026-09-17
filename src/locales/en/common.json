@@ -1,0 +1,102 @@
+{
+  "brand": {
+    "name": "Calories Detect",
+    "home": "Calories Detect — Home",
+    "tagline": "Know your meals, feel better every day",
+    "description": "Calories Detect — Your daily meal diary and nutrition tracker."
+  },
+  "pageTitle": "{{title}} · Calories Detect",
+  "language": {
+    "label": "Language",
+    "change": "Change language"
+  },
+  "actions": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "confirmDelete": "Confirm deletion",
+    "saveChanges": "Save changes",
+    "retry": "Try again",
+    "refresh": "Refresh",
+    "today": "Today",
+    "reload": "Reload page",
+    "backToDashboard": "Back to dashboard",
+    "clearFilters": "Clear filters",
+    "editNamed": "Edit {{name}}",
+    "deleteNamed": "Delete {{name}}"
+  },
+  "fields": {
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "fullName": "Full name",
+    "namePlaceholder": "Alex Nguyen",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "passwordHint": "Between 8 and 72 characters.",
+    "showPassword": "Show {{label}}",
+    "hidePassword": "Hide {{label}}",
+    "role": "Role",
+    "status": "Status",
+    "createdAt": "Created on",
+    "actions": "Actions"
+  },
+  "roles": {
+    "ADMIN": "Administrator",
+    "USER": "Member"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "feedback": {
+    "loadingLabel": "Loading data",
+    "loading": "Loading data…",
+    "processing": "Processing…",
+    "loadError": "Unable to load data",
+    "notifications": "Notifications",
+    "closeNotification": "Dismiss notification"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "meals": "Meal diary",
+    "profile": "Account",
+    "admin": "Administration",
+    "users": "Users",
+    "workspace": "Personal workspace",
+    "yourWorkspace": "YOUR WORKSPACE",
+    "main": "Main navigation",
+    "skip": "Skip to content",
+    "openMenu": "Open navigation menu",
+    "menu": "Navigation menu",
+    "menuDescription": "Navigate to Calories Detect features.",
+    "openingPage": "Opening page…",
+    "tipTitle": "Start with small steps",
+    "tipDescription": "Log meals regularly to understand your eating habits.",
+    "yourAccount": "Your account",
+    "viewAccount": "View account details"
+  },
+  "theme": {
+    "change": "Change color theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "pagination": {
+    "label": "Pagination",
+    "pageSize": "Results per page",
+    "perPage": "{{count, number}} / page",
+    "previous": "Previous page",
+    "next": "Next page",
+    "results_one": "{{start, number}}–{{end, number}} of {{count, number}} result",
+    "results_other": "{{start, number}}–{{end, number}} of {{count, number}} results",
+    "empty": "0 of 0 results",
+    "page": "{{current, number}} / {{total, number}}"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "This page does not exist or has moved."
+  },
+  "routeError": {
+    "title": "Unable to display this page",
+    "description": "Something went wrong while opening this page. Please reload to continue."
+  }
+}

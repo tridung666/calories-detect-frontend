@@ -1,0 +1,87 @@
+{
+  "description": "Từng bữa ăn, từng ngày. Lưu lại và theo dõi dinh dưỡng của bạn.",
+  "add": "Thêm bữa ăn",
+  "create": "Tạo bữa ăn",
+  "edit": "Sửa bữa ăn",
+  "editTitle": "Chỉnh sửa bữa ăn",
+  "date": "Ngày ăn",
+  "type": "Loại bữa ăn",
+  "meal": "Bữa ăn",
+  "all": "Tất cả bữa ăn",
+  "list": "Danh sách bữa ăn",
+  "count_one": "{{count, number}} bữa ăn",
+  "count_other": "{{count, number}} bữa ăn",
+  "types": {
+    "BREAKFAST": "Bữa sáng",
+    "LUNCH": "Bữa trưa",
+    "DINNER": "Bữa tối",
+    "SNACK": "Bữa phụ"
+  },
+  "empty": {
+    "filteredTitle": "Chưa có bữa ăn phù hợp",
+    "filteredDescription": "Thử chọn một ngày hoặc loại bữa ăn khác.",
+    "title": "Bắt đầu với bữa ăn đầu tiên",
+    "description": "Thêm bữa ăn và các món bạn đã ăn để bắt đầu theo dõi dinh dưỡng."
+  },
+  "delete": {
+    "title": "Xóa bữa ăn?",
+    "description": "Bữa ăn ngày {{date}} và tất cả món ăn bên trong sẽ bị xóa. Thao tác này không thể hoàn tác."
+  },
+  "formDescription": "Chọn ngày và loại bữa ăn. Bạn có thể thêm món ăn sau khi lưu.",
+  "detail": {
+    "invalidTitle": "Bữa ăn không hợp lệ",
+    "invalidDescription": "Vui lòng chọn một bữa ăn từ nhật ký.",
+    "back": "Về nhật ký",
+    "description_one": "Ngày {{date}} · {{count, number}} món ăn",
+    "description_other": "Ngày {{date}} · {{count, number}} món ăn",
+    "foods": "Các món trong bữa ăn",
+    "nutritionHint": "Dinh dưỡng tính cho toàn bộ khẩu phần đã ghi nhận.",
+    "emptyTitle": "Bữa ăn chưa có món nào",
+    "emptyDescription": "Thêm món ăn và khối lượng khẩu phần để xem tổng dinh dưỡng của bữa ăn.",
+    "firstFood": "Thêm món đầu tiên"
+  },
+  "table": {
+    "view": "Xem {{meal}} ngày {{date}}",
+    "edit": "Sửa {{meal}} ngày {{date}}",
+    "delete": "Xóa {{meal}} ngày {{date}}"
+  },
+  "items": {
+    "add": "Thêm món ăn",
+    "edit": "Chỉnh sửa món ăn",
+    "deleteTitle": "Xóa món ăn?",
+    "deleteDescription": "Món “{{name}}” sẽ được xóa khỏi bữa ăn. Thao tác này không thể hoàn tác.",
+    "formDescription": "Nhập dinh dưỡng cho toàn bộ khẩu phần bạn đã ăn, không phải cho 100 g.",
+    "name": "Tên món ăn",
+    "namePlaceholder": "Ví dụ: Cơm gà",
+    "normalizedName": "Tên chuẩn hóa (không bắt buộc)",
+    "normalizedPlaceholder": "Tên dùng để nhận diện món ăn",
+    "quantity": "Khối lượng khẩu phần (g)",
+    "food": "Món ăn",
+    "weight": "Khối lượng",
+    "grams": "{{value}} g"
+  },
+  "nutrition": {
+    "calories": "Năng lượng",
+    "protein": "Chất đạm",
+    "carbohydrates": "Tinh bột",
+    "fat": "Chất béo",
+    "caloriesWithUnit": "Năng lượng (kcal)",
+    "proteinWithUnit": "Chất đạm (g)",
+    "carbohydratesWithUnit": "Tinh bột (g)",
+    "fatWithUnit": "Chất béo (g)",
+    "proteinShort": "Đạm (g)",
+    "fatShort": "Béo (g)"
+  },
+  "units": {
+    "kcal": "kcal",
+    "grams": "g"
+  },
+  "notifications": {
+    "created": "Đã tạo bữa ăn",
+    "updated": "Đã cập nhật bữa ăn",
+    "deleted": "Đã xóa bữa ăn",
+    "itemCreated": "Đã thêm món ăn",
+    "itemUpdated": "Đã cập nhật món ăn",
+    "itemDeleted": "Đã xóa món ăn"
+  }
+}

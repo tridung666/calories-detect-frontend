@@ -1,9 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react"
 
-import {
-  ThemeProviderContext,
-  type Theme,
-} from "@/components/theme-provider-context"
+import { ThemeProviderContext, type Theme } from "@/components/theme-provider-context"
 
 type ThemeProviderProps = {
   children: ReactNode
@@ -11,19 +8,15 @@ type ThemeProviderProps = {
   storageKey?: string
 }
 
-export function ThemeProvider({
+export const ThemeProvider = ({
   children,
   defaultTheme = "system",
   storageKey = "vite-ui-theme",
-}: ThemeProviderProps) {
+}: ThemeProviderProps) => {
   const [theme, setTheme] = useState<Theme>(() => {
     const storedTheme = localStorage.getItem(storageKey)
 
-    if (
-      storedTheme === "light" ||
-      storedTheme === "dark" ||
-      storedTheme === "system"
-    ) {
+    if (storedTheme === "light" || storedTheme === "dark" || storedTheme === "system") {
       return storedTheme
     }
 
@@ -32,17 +25,11 @@ export function ThemeProvider({
 
   useEffect(() => {
     const root = window.document.documentElement
-    const systemThemeQuery = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    )
+    const systemThemeQuery = window.matchMedia("(prefers-color-scheme: dark)")
 
-    function applyTheme() {
+    const applyTheme = () => {
       const resolvedTheme =
-        theme === "system"
-          ? systemThemeQuery.matches
-            ? "dark"
-            : "light"
-          : theme
+        theme === "system" ? (systemThemeQuery.matches ? "dark" : "light") : theme
 
       root.classList.remove("light", "dark")
       root.classList.add(resolvedTheme)
@@ -69,9 +56,5 @@ export function ThemeProvider({
     },
   }
 
-  return (
-    <ThemeProviderContext.Provider value={value}>
-      {children}
-    </ThemeProviderContext.Provider>
-  )
+  return <ThemeProviderContext.Provider value={value}>{children}</ThemeProviderContext.Provider>
 }
