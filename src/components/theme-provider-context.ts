@@ -7,6 +7,4 @@ export type ThemeProviderState = {
   setTheme: (theme: Theme) => void
 }
 
-export const ThemeProviderContext = createContext<
-  ThemeProviderState | undefined
->(undefined)
+export const ThemeProviderContext = createContext<ThemeProviderState | undefined>(undefined)

@@ -1,4 +1,5 @@
 import * as React from "react"
+
 import { cva, type VariantProps } from "class-variance-authority"
 import { Slot } from "radix-ui"
 
@@ -38,10 +39,10 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 )
 
-function Button({
+const Button = ({
   className,
   variant = "default",
   size = "default",
@@ -50,7 +51,7 @@ function Button({
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
-  }) {
+  }) => {
   const Comp = asChild ? Slot.Root : "button"
 
   return (

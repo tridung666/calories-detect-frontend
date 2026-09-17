@@ -1,0 +1,14 @@
+{
+  "title": "Quản lý người dùng",
+  "description": "Danh sách tài khoản và quyền truy cập trong hệ thống.",
+  "add": "Thêm người dùng",
+  "all": "Tất cả người dùng",
+  "count_one": "{{count, number}} tài khoản",
+  "count_other": "{{count, number}} tài khoản",
+  "emptyTitle": "Chưa có người dùng ở trang này",
+  "emptyDescription": "Thêm tài khoản mới hoặc quay lại trang trước.",
+  "createDescription": "Tạo tài khoản và chọn quyền truy cập phù hợp.",
+  "roleHint": "Quản trị viên có quyền xem và tạo người dùng.",
+  "create": "Tạo người dùng",
+  "created": "Đã tạo người dùng"
+}

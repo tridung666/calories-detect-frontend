@@ -1,0 +1,102 @@
+{
+  "brand": {
+    "name": "Calories Detect",
+    "home": "Calories Detect — Trang chủ",
+    "tagline": "Hiểu bữa ăn, khỏe mỗi ngày",
+    "description": "Calories Detect — Nhật ký bữa ăn và theo dõi dinh dưỡng mỗi ngày."
+  },
+  "pageTitle": "{{title}} · Calories Detect",
+  "language": {
+    "label": "Ngôn ngữ",
+    "change": "Đổi ngôn ngữ"
+  },
+  "actions": {
+    "cancel": "Hủy",
+    "close": "Đóng",
+    "confirmDelete": "Xác nhận xóa",
+    "saveChanges": "Lưu thay đổi",
+    "retry": "Thử lại",
+    "refresh": "Làm mới",
+    "today": "Hôm nay",
+    "reload": "Tải lại trang",
+    "backToDashboard": "Về tổng quan",
+    "clearFilters": "Xóa bộ lọc",
+    "editNamed": "Sửa {{name}}",
+    "deleteNamed": "Xóa {{name}}"
+  },
+  "fields": {
+    "email": "Email",
+    "emailPlaceholder": "ban@example.com",
+    "fullName": "Họ và tên",
+    "namePlaceholder": "Nguyễn Minh Anh",
+    "password": "Mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "passwordHint": "Từ 8 đến 72 ký tự.",
+    "showPassword": "Hiện {{label}}",
+    "hidePassword": "Ẩn {{label}}",
+    "role": "Vai trò",
+    "status": "Trạng thái",
+    "createdAt": "Ngày tạo",
+    "actions": "Thao tác"
+  },
+  "roles": {
+    "ADMIN": "Quản trị viên",
+    "USER": "Thành viên"
+  },
+  "status": {
+    "active": "Hoạt động",
+    "inactive": "Ngừng hoạt động"
+  },
+  "feedback": {
+    "loadingLabel": "Đang tải dữ liệu",
+    "loading": "Đang tải dữ liệu…",
+    "processing": "Đang xử lý…",
+    "loadError": "Chưa thể tải dữ liệu",
+    "notifications": "Thông báo",
+    "closeNotification": "Đóng thông báo"
+  },
+  "navigation": {
+    "dashboard": "Tổng quan",
+    "meals": "Nhật ký bữa ăn",
+    "profile": "Tài khoản",
+    "admin": "Quản trị",
+    "users": "Người dùng",
+    "workspace": "Không gian cá nhân",
+    "yourWorkspace": "KHÔNG GIAN CỦA BẠN",
+    "main": "Điều hướng chính",
+    "skip": "Bỏ qua menu, đến nội dung",
+    "openMenu": "Mở menu điều hướng",
+    "menu": "Menu điều hướng",
+    "menuDescription": "Đi đến các chức năng của Calories Detect.",
+    "openingPage": "Đang mở trang…",
+    "tipTitle": "Bắt đầu từ những điều nhỏ",
+    "tipDescription": "Ghi lại bữa ăn đều đặn để hiểu thêm thói quen dinh dưỡng của bạn.",
+    "yourAccount": "Tài khoản của bạn",
+    "viewAccount": "Xem thông tin tài khoản"
+  },
+  "theme": {
+    "change": "Đổi giao diện sáng tối",
+    "light": "Sáng",
+    "dark": "Tối",
+    "system": "Theo hệ thống"
+  },
+  "pagination": {
+    "label": "Phân trang",
+    "pageSize": "Số kết quả mỗi trang",
+    "perPage": "{{count, number}} / trang",
+    "previous": "Trang trước",
+    "next": "Trang sau",
+    "results_one": "{{start, number}}–{{end, number}} trong {{count, number}} kết quả",
+    "results_other": "{{start, number}}–{{end, number}} trong {{count, number}} kết quả",
+    "empty": "0 trong 0 kết quả",
+    "page": "{{current, number}} / {{total, number}}"
+  },
+  "notFound": {
+    "title": "Không tìm thấy trang",
+    "description": "Đường dẫn này không tồn tại hoặc đã được thay đổi."
+  },
+  "routeError": {
+    "title": "Trang chưa thể hiển thị",
+    "description": "Đã có lỗi khi mở trang. Vui lòng tải lại để tiếp tục."
+  }
+}

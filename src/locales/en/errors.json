@@ -1,0 +1,21 @@
+{
+  "emailTaken": "This email is already in use.",
+  "accountNotFound": "Account not found.",
+  "accountInactive": "This account is inactive or locked.",
+  "sessionExpired": "Your session has expired. Please sign in again.",
+  "invalidCredentials": "Email or password is incorrect.",
+  "incorrectPassword": "Your current password is incorrect.",
+  "passwordMismatch": "Passwords do not match.",
+  "googleVerification": "Unable to verify your Google account. Please try again.",
+  "mealNotFound": "This meal does not exist or has been deleted.",
+  "foodNotFound": "This food does not exist or has been deleted.",
+  "badRequest": "Some information is invalid. Please check and try again.",
+  "forbidden": "You do not have permission to perform this action.",
+  "notFound": "The requested data could not be found.",
+  "conflict": "This data already exists or has changed. Please reload.",
+  "tooManyRequests": "Too many requests. Please try again in a few minutes.",
+  "generic": "Something went wrong. Please try again.",
+  "timeout": "The server took too long to respond. Please try again.",
+  "network": "Unable to connect to the server.",
+  "server": "The server is having trouble. Please try again later."
+}

@@ -1,7 +1,10 @@
+import { useTranslation } from "react-i18next"
+
 import { Toaster } from "@/components/ui/sonner"
 import { useTheme } from "@/hooks/useTheme"
 
-export function AppToaster() {
+export const AppToaster = () => {
+  const { t } = useTranslation()
   const { theme } = useTheme()
 
   return (
@@ -10,6 +13,8 @@ export function AppToaster() {
       position="top-right"
       richColors
       theme={theme}
+      containerAriaLabel={t("feedback.notifications")}
+      toastOptions={{ closeButtonAriaLabel: t("feedback.closeNotification") }}
     />
   )
 }

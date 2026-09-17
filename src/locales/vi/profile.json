@@ -1,0 +1,17 @@
+{
+  "description": "Thông tin cá nhân và bảo mật tài khoản của bạn.",
+  "personalInformation": "Thông tin cá nhân",
+  "active": "Đang hoạt động",
+  "joinedAt": "Ngày tham gia",
+  "updatedAt": "Cập nhật lần cuối",
+  "password": {
+    "title": "Đổi mật khẩu",
+    "description": "Cập nhật mật khẩu để bảo vệ tài khoản của bạn.",
+    "current": "Mật khẩu hiện tại",
+    "new": "Mật khẩu mới",
+    "confirm": "Xác nhận mật khẩu mới",
+    "hint": "Từ 8 đến 72 ký tự, khác mật khẩu hiện tại.",
+    "submit": "Cập nhật mật khẩu",
+    "success": "Đã đổi mật khẩu"
+  }
+}

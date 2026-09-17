@@ -1,0 +1,17 @@
+{
+  "description": "Your personal information and account security.",
+  "personalInformation": "Personal information",
+  "active": "Active",
+  "joinedAt": "Joined on",
+  "updatedAt": "Last updated",
+  "password": {
+    "title": "Change password",
+    "description": "Update your password to protect your account.",
+    "current": "Current password",
+    "new": "New password",
+    "confirm": "Confirm new password",
+    "hint": "Between 8 and 72 characters, different from your current password.",
+    "submit": "Update password",
+    "success": "Password changed"
+  }
+}
