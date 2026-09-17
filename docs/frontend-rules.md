@@ -114,3 +114,16 @@ Every page should support:
 - Lazy load pages.
 - Avoid unnecessary renders.
 - Memoize only when beneficial.
+
+---
+
+## Internationalization
+
+- Keep user-facing copy in `src/locales/<language>/<namespace>.json`.
+- Use `useTranslation` with explicit namespaces in components and `i18n.t` at call
+  time outside React. Never resolve translations at module initialization.
+- Use interpolation and pluralization instead of concatenating sentences.
+- Store typed translation keys in Zod validation messages; shared form fields
+  translate them when rendering.
+- Use locale-aware date and number helpers without changing API data formats.
+- Follow [the localization guide](./i18n.md) when adding copy or languages.
