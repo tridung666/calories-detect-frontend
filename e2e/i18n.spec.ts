@@ -28,9 +28,11 @@ test("switches existing form errors, preserves input and persists across reloads
   await page.getByLabel("Email", { exact: true }).fill("test@example.com")
   await page.getByLabel("Password", { exact: true }).fill("wrong")
   await page.getByRole("button", { name: "Sign in", exact: true }).click()
-  await expect(page.getByText("Email or password is incorrect.")).toBeVisible()
+  await expect(page.getByRole("alert").getByText("Email or password is incorrect.")).toBeVisible()
   await changeLanguage(page, "Tiếng Việt")
-  await expect(page.getByText("Email hoặc mật khẩu chưa chính xác.")).toBeVisible()
+  await expect(
+    page.getByRole("alert").getByText("Email hoặc mật khẩu chưa chính xác."),
+  ).toBeVisible()
   await expect(page.getByLabel("Mật khẩu", { exact: true })).toHaveValue("wrong")
 })
 
