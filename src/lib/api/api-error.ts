@@ -15,6 +15,17 @@ const businessMessages: Partial<Record<number, ErrorKey>> = {
   11002: "incorrectPassword",
   11003: "passwordMismatch",
   11004: "googleVerification",
+  11005: "emailNotVerified",
+  11006: "invalidOtp",
+  11007: "googleAccountConflict",
+  11008: "emailDeliveryFailed",
+  11009: "localPasswordRequired",
+  11010: "otpRateLimited",
+  11012: "invalidNewPassword",
+  11013: "localPasswordExists",
+  13000: "sessionExpired",
+  13001: "sessionExpired",
+  13002: "sessionExpired",
   14000: "mealNotFound",
   14002: "foodNotFound",
 }
@@ -43,7 +54,14 @@ export const getApiErrorMessage = (
   }
 
   const { status, data } = error.response
-  const key = businessMessages[data?.code] ?? statusMessages[status]
+  const businessKey = businessMessages[data?.code]
+  if (businessKey) return i18n.t(`errors:${businessKey}`)
+  // Preserve validation/business messages not yet represented by a localized code.
+  if (status < 500 && typeof data?.message === "string" && data.message.trim()) return data.message
+  const key = statusMessages[status]
   if (key) return i18n.t(`errors:${key}`)
   return status >= 500 ? i18n.t("errors:server") : fallbackMessage
 }
+
+export const getApiErrorCode = (error: unknown): number | undefined =>
+  axios.isAxiosError<ApiErrorResponse>(error) ? error.response?.data?.code : undefined

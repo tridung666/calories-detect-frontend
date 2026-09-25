@@ -5,12 +5,12 @@ import type {
   MealItemRequest,
   MealRequest,
 } from "@/features/meals/types/meal"
-import type { ApiResponse, BackendPageResponse } from "@/lib/api/api-types"
+import type { ApiSuccessResponse, BackendPageResponse } from "@/lib/api/api-types"
 import { normalizePage, toPageParams } from "@/lib/api/pagination"
 import { apiClient } from "@/lib/axios"
 
 export const getMeals = async ({ page, size, ...filters }: MealFilters, signal?: AbortSignal) => {
-  const response = await apiClient.get<ApiResponse<BackendPageResponse<Meal>>>("/meal", {
+  const response = await apiClient.get<ApiSuccessResponse<BackendPageResponse<Meal>>>("/meal", {
     params: { ...toPageParams({ page, size }), ...filters },
     signal,
   })
@@ -18,37 +18,42 @@ export const getMeals = async ({ page, size, ...filters }: MealFilters, signal?:
 }
 
 export const getMeal = async (id: number, signal?: AbortSignal) => {
-  const response = await apiClient.get<ApiResponse<Meal>>(`/meal/${id}`, { signal })
+  const response = await apiClient.get<ApiSuccessResponse<Meal>>(`/meal/${id}`, { signal })
   return response.data.data
 }
 
 export const createMeal = async (payload: MealRequest) => {
-  const response = await apiClient.post<ApiResponse<Meal>>("/meal/create", payload)
+  const response = await apiClient.post<ApiSuccessResponse<Meal>>("/meal/create", payload)
   return response.data.data
 }
 
 export const updateMeal = async (id: number, payload: MealRequest) => {
-  const response = await apiClient.put<ApiResponse<Meal>>(`/meal/${id}`, payload)
+  const response = await apiClient.put<ApiSuccessResponse<Meal>>(`/meal/${id}`, payload)
   return response.data.data
 }
 
 export const deleteMeal = async (id: number) => {
-  const response = await apiClient.delete<ApiResponse<null>>(`/meal/${id}`)
+  const response = await apiClient.delete<ApiSuccessResponse<null>>(`/meal/${id}`)
   return response.data.data
 }
 
 export const getMealItems = async (mealId: number, signal?: AbortSignal) => {
-  const response = await apiClient.get<ApiResponse<MealItem[]>>(`/meal/${mealId}/items`, { signal })
+  const response = await apiClient.get<ApiSuccessResponse<MealItem[]>>(`/meal/${mealId}/items`, {
+    signal,
+  })
   return response.data.data
 }
 
 export const createMealItem = async (mealId: number, payload: MealItemRequest) => {
-  const response = await apiClient.post<ApiResponse<MealItem>>(`/meal/${mealId}/items`, payload)
+  const response = await apiClient.post<ApiSuccessResponse<MealItem>>(
+    `/meal/${mealId}/items`,
+    payload,
+  )
   return response.data.data
 }
 
 export const updateMealItem = async (mealId: number, itemId: number, payload: MealItemRequest) => {
-  const response = await apiClient.put<ApiResponse<MealItem>>(
+  const response = await apiClient.put<ApiSuccessResponse<MealItem>>(
     `/meal/${mealId}/items/${itemId}`,
     payload,
   )
@@ -56,6 +61,8 @@ export const updateMealItem = async (mealId: number, itemId: number, payload: Me
 }
 
 export const deleteMealItem = async (mealId: number, itemId: number) => {
-  const response = await apiClient.delete<ApiResponse<null>>(`/meal/${mealId}/items/${itemId}`)
+  const response = await apiClient.delete<ApiSuccessResponse<null>>(
+    `/meal/${mealId}/items/${itemId}`,
+  )
   return response.data.data
 }

@@ -5,7 +5,6 @@ import axios from "axios"
 
 import { LanguageProvider } from "@/app/providers/language-provider"
 import { ThemeProvider } from "@/components/theme-provider"
-import { readSession } from "@/features/auth/lib/session"
 import { tokenStorage } from "@/lib/api/token-storage"
 
 const queryClient = new QueryClient({
@@ -24,12 +23,12 @@ const queryClient = new QueryClient({
 
 export const AppProviders = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
-    let userId = readSession(tokenStorage.getAccessToken())?.userId
+    let version = tokenStorage.getSessionVersion()
     return tokenStorage.subscribe(() => {
-      const nextUserId = readSession(tokenStorage.getAccessToken())?.userId
-      if (userId !== nextUserId) {
+      const nextVersion = tokenStorage.getSessionVersion()
+      if (version !== nextVersion) {
         queryClient.clear()
-        userId = nextUserId
+        version = nextVersion
       }
     })
   }, [])

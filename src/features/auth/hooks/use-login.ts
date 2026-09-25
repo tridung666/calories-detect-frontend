@@ -7,9 +7,9 @@ export const useLogin = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: loginApi,
-    onSuccess: ({ tokens: { accessToken, refreshToken } }) => {
+    onSuccess: ({ tokens: { accessToken, expiresIn } }) => {
       queryClient.clear()
-      tokenStorage.setTokens(accessToken, refreshToken)
+      tokenStorage.setAccessToken(accessToken, { expiresIn })
     },
   })
 }
