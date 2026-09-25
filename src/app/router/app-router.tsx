@@ -15,6 +15,19 @@ export const appRouter = createBrowserRouter([
     children: [
       { index: true, element: <Navigate to="login" replace /> },
       {
+        path: "verify-email",
+        lazy: async () => ({
+          Component: (await import("@/features/auth/pages/verify-email-page")).VerifyEmailPage,
+        }),
+      },
+      {
+        path: "forgot-password",
+        lazy: async () => ({
+          Component: (await import("@/features/auth/pages/forgot-password-page"))
+            .ForgotPasswordPage,
+        }),
+      },
+      {
         path: "login",
         lazy: async () => ({
           Component: (await import("@/features/auth/pages/login-page")).LoginPage,
@@ -53,6 +66,13 @@ export const appRouter = createBrowserRouter([
             path: "/meals/:mealId",
             lazy: async () => ({
               Component: (await import("@/features/meals/pages/meal-detail-page")).MealDetailPage,
+            }),
+          },
+          {
+            path: "/profile/change-password",
+            lazy: async () => ({
+              Component: (await import("@/features/profile/pages/confirm-password-change-page"))
+                .ConfirmPasswordChangePage,
             }),
           },
           {

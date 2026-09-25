@@ -18,7 +18,6 @@
   "passwordMismatch": "Mật khẩu xác nhận không khớp",
   "currentPasswordRequired": "Vui lòng nhập mật khẩu hiện tại",
   "confirmNewPasswordRequired": "Vui lòng xác nhận mật khẩu mới",
-  "passwordDifferent": "Mật khẩu mới cần khác mật khẩu hiện tại",
   "mealTypeRequired": "Vui lòng chọn loại bữa ăn",
   "foodNameRequired": "Vui lòng nhập tên món ăn",
   "foodNameMax": "Tên tối đa 255 ký tự",
@@ -26,5 +25,7 @@
   "quantityPositive": "Khối lượng phải lớn hơn 0",
   "quantityMax": "Khối lượng quá lớn",
   "quantityPrecision": "Khối lượng tối đa 2 chữ số thập phân",
-  "roleRequired": "Vui lòng chọn vai trò"
+  "roleRequired": "Vui lòng chọn vai trò",
+  "otpInvalid": "Vui lòng nhập mã xác minh gồm 6 chữ số",
+  "passwordBlank": "Mật khẩu không được chỉ gồm khoảng trắng"
 }

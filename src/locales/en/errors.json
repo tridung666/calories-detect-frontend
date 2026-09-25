@@ -17,5 +17,13 @@
   "generic": "Something went wrong. Please try again.",
   "timeout": "The server took too long to respond. Please try again.",
   "network": "Unable to connect to the server.",
-  "server": "The server is having trouble. Please try again later."
+  "server": "The server is having trouble. Please try again later.",
+  "emailNotVerified": "Verify your email before signing in.",
+  "invalidOtp": "The code is invalid, expired, used, has no attempts left, or the account is not eligible. Request a new code when available.",
+  "googleAccountConflict": "This email already has an account. Sign in with your existing method, then link Google in your account.",
+  "emailDeliveryFailed": "Unable to send the verification email. Please try again later.",
+  "localPasswordRequired": "This account has no local password. Set your first password in your account.",
+  "otpRateLimited": "Please wait 60 seconds between requests. You can receive up to 5 codes per hour; try again later if that limit is reached.",
+  "invalidNewPassword": "Password must be 8–72 characters and at most 72 UTF-8 bytes.",
+  "localPasswordExists": "This account already has a password. Use change password or forgot password."
 }
