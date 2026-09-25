@@ -6,6 +6,21 @@ export const TEST_DATE = "2026-09-12"
 export const TEST_PASSWORD = "TestPass123!"
 
 export const mockApi = async (page: Page, role: "USER" | "ADMIN" = "USER") => {
+  await page.route("https://accounts.google.com/gsi/client", (route) =>
+    route.fulfill({
+      contentType: "application/javascript",
+      body: `let googleCallback;
+      window.google = { accounts: { id: {
+        initialize: (options) => { googleCallback = options.callback; },
+        renderButton: (element) => {
+          const button = document.createElement('button');
+          button.textContent = 'Test Google sign-in';
+          button.onclick = () => googleCallback({ credential: 'test-google-id-token' });
+          element.appendChild(button);
+        }
+      } } };`,
+    }),
+  )
   const user = {
     id: 1,
     fullName: "Nguyễn Minh Anh",
@@ -16,20 +31,33 @@ export const mockApi = async (page: Page, role: "USER" | "ADMIN" = "USER") => {
     updatedAt: "2026-09-12T08:00:00",
   }
   const state = {
+    refreshToken: null as string | null,
+    tokenVersion: 0,
+    expiresIn: 3600,
     meals: [] as Meal[],
     items: {} as Record<number, MealItem[]>,
     users: [user],
     failMeals: false,
-    requests: [] as { method: string; path: string; body: Record<string, unknown> }[],
+    googleOnly: false,
+    googleConflict: false,
+    googleLinked: false,
+    unverified: false,
+    otp: "123456",
+    password: TEST_PASSWORD,
+    requests: [] as {
+      method: string
+      path: string
+      body: Record<string, unknown>
+      authorization?: string
+    }[],
   }
   const tokens = () => ({
-    accessToken: `test.${Buffer.from(JSON.stringify({ userId: 1, sub: user.email, role, exp: 9_999_999_999 })).toString("base64url")}.signature`,
-    refreshToken: "test-refresh-token",
+    accessToken: `test.${Buffer.from(JSON.stringify({ userId: 1, sub: user.email, role, exp: 9_999_999_999 })).toString("base64url")}.signature-${state.tokenVersion}`,
     tokenType: "Bearer",
-    expiresIn: 3600,
+    expiresIn: state.expiresIn,
   })
 
-  await page.route(
+  await page.context().route(
     (url) => url.pathname.startsWith("/api/"),
     async (route) => {
       const request = route.request()
@@ -37,10 +65,16 @@ export const mockApi = async (page: Page, role: "USER" | "ADMIN" = "USER") => {
       const path = url.pathname.replace(/^\/api/, "")
       const method = request.method()
       const body = (request.postDataJSON() ?? {}) as Record<string, unknown>
-      state.requests.push({ method, path, body })
-      const reply = (data: unknown, status = 200, code = status) =>
+      state.requests.push({ method, path, body, authorization: request.headers().authorization })
+      const reply = (
+        data: unknown,
+        status = 200,
+        code = status,
+        headers?: Record<string, string>,
+      ) =>
         route.fulfill({
           status,
+          headers,
           json: { success: status < 400, code, message: status < 400 ? "Success" : "Error", data },
         })
       const paginate = <T>(entries: T[]) => {
@@ -55,11 +89,73 @@ export const mockApi = async (page: Page, role: "USER" | "ADMIN" = "USER") => {
           last: (pageNo + 1) * pageSize >= entries.length,
         }
       }
-      if (path === "/auth/login")
-        return body.password === TEST_PASSWORD ? reply(tokens()) : reply(null, 401, 11001)
-      if (path === "/auth/refresh-token") return reply(tokens())
-      if (path === "/auth/register") return reply(user)
-      if (path === "/auth/logout" || path === "/auth/change-password") return reply(null)
+      const issue = () => {
+        state.refreshToken = `refresh-${++state.tokenVersion}`
+        return reply(tokens(), 200, 200, {
+          "Set-Cookie": `calories_refresh=${state.refreshToken}; HttpOnly; SameSite=Lax; Path=/api/auth`,
+        })
+      }
+      if (path === "/auth/csrf") return reply({ token: "test-csrf", headerName: "X-XSRF-TOKEN" })
+      if (
+        ["/auth/login", "/auth/google", "/auth/refresh-token", "/auth/logout"].includes(path) &&
+        request.headers()["x-xsrf-token"] !== "test-csrf"
+      )
+        return reply(null, 403)
+      if (path === "/auth/login") {
+        if (state.googleOnly || body.password !== state.password) return reply(null, 400, 11001)
+        if (state.unverified) return reply(null, 400, 11005)
+        return issue()
+      }
+      if (path === "/auth/google") return state.googleConflict ? reply(null, 400, 11007) : issue()
+      if (path === "/auth/refresh-token") {
+        const cookie = (await request.allHeaders()).cookie ?? ""
+        if (!state.refreshToken || !cookie.includes(`calories_refresh=${state.refreshToken}`))
+          return reply(null, 401, 13000)
+        return issue()
+      }
+      if (path === "/auth/register")
+        return reply({
+          ...user,
+          email: String(body.email).trim().toLowerCase(),
+          emailVerified: false,
+        })
+      if (path === "/auth/verify-email") {
+        if (body.otp !== state.otp) return reply(null, 400, 11006)
+        state.unverified = false
+        return reply("Email verified")
+      }
+      if (path === "/auth/google/link") {
+        if (state.googleConflict) return reply(null, 400, 11007)
+        state.googleLinked = true
+        return reply("Google linked")
+      }
+      if (path === "/auth/set-password") {
+        if (!state.googleOnly) return reply(null, 400, 11013)
+        state.googleOnly = false
+        state.password = String(body.newPassword)
+        state.refreshToken = null
+        return reply("Password set")
+      }
+      if (path === "/auth/resend-otp") return reply("Code sent")
+      if (path === "/auth/forgot-password") return reply("If eligible, a code will be sent")
+      if (path === "/auth/change-password/request") {
+        if (state.googleOnly) return reply(null, 400, 11009)
+        return body.currentPassword === state.password
+          ? reply("Code sent")
+          : reply(null, 400, 11002)
+      }
+      if (path === "/auth/reset-password") {
+        if (body.otp !== state.otp) return reply(null, 400, 11006)
+        state.password = String(body.newPassword)
+        if (body.email === user.email) state.refreshToken = null
+        return reply("Password changed")
+      }
+      if (path === "/auth/logout") {
+        state.refreshToken = null
+        return reply(null, 200, 200, {
+          "Set-Cookie": "calories_refresh=; Max-Age=0; HttpOnly; SameSite=Lax; Path=/api/auth",
+        })
+      }
       if (path === "/user/1") return reply(user)
       if (path === "/admin/users") {
         if (role !== "ADMIN") return reply(null, 403)

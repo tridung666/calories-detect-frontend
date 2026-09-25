@@ -1,37 +1,50 @@
-import type { AxiosInstance } from "axios"
+import axios, { type AxiosInstance } from "axios"
 
-import type { ApiResponse } from "@/lib/api/api-types"
+import type { LoginResponse } from "@/features/auth/types/login"
+import type { ApiSuccessResponse } from "@/lib/api/api-types"
+import { getApiErrorCode } from "@/lib/api/api-error"
+import { withSessionLock } from "@/lib/api/session-lock"
 import { tokenStorage } from "@/lib/api/token-storage"
 
-type RefreshedTokens = { accessToken: string; refreshToken: string }
+export const isSessionRejected = (error: unknown) => {
+  const status = axios.isAxiosError(error) ? error.response?.status : undefined
+  return (
+    status === 401 ||
+    (status === 400 &&
+      [10003, 11000, 11005, 13000, 13001, 13002, 13003].includes(getApiErrorCode(error) ?? 0))
+  )
+}
 
 export const createTokenRefresher = (client: AxiosInstance) => {
   let pendingRefresh: Promise<string> | null = null
-
   return () => {
     if (pendingRefresh) return pendingRefresh
-    const refreshToken = tokenStorage.getRefreshToken()
-    if (!refreshToken) {
-      tokenStorage.clearTokens()
-      return Promise.reject(new Error("Phiên đăng nhập đã hết hạn."))
+    const sessionVersion = tokenStorage.getSessionVersion()
+    const previousToken = tokenStorage.getAccessToken()
+    const assertSession = () => {
+      if (sessionVersion !== tokenStorage.getSessionVersion())
+        throw new axios.CanceledError("Session changed")
     }
-    pendingRefresh = client
-      .post<ApiResponse<RefreshedTokens>>("/auth/refresh-token", { refreshToken })
-      .then(({ data }) => {
-        // A late refresh must never restore a session after logout/account switching.
-        if (tokenStorage.getRefreshToken() !== refreshToken) {
-          throw new Error("Phiên đăng nhập đã thay đổi.")
-        }
-        tokenStorage.setTokens(data.data.accessToken, data.data.refreshToken, { isRefresh: true })
+    pendingRefresh = withSessionLock(async () => {
+      assertSession()
+      const current = tokenStorage.getAccessToken()
+      if (current && current !== previousToken) return current
+      try {
+        const { data } = await client.post<ApiSuccessResponse<LoginResponse>>("/auth/refresh-token")
+        assertSession()
+        tokenStorage.setAccessToken(data.data.accessToken, {
+          isRefresh: true,
+          expiresIn: data.data.expiresIn,
+        })
         return data.data.accessToken
-      })
-      .catch((error: unknown) => {
-        if (tokenStorage.getRefreshToken() === refreshToken) tokenStorage.clearTokens()
+      } catch (error) {
+        if (isSessionRejected(error) && sessionVersion === tokenStorage.getSessionVersion())
+          tokenStorage.clearTokens()
         throw error
-      })
-      .finally(() => {
-        pendingRefresh = null
-      })
+      }
+    }).finally(() => {
+      pendingRefresh = null
+    })
     return pendingRefresh
   }
 }

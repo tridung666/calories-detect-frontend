@@ -6,12 +6,35 @@
   "updatedAt": "Last updated",
   "password": {
     "title": "Change password",
-    "description": "Update your password to protect your account.",
+    "description": "First, confirm your current password to receive an email verification code.",
     "current": "Current password",
     "new": "New password",
     "confirm": "Confirm new password",
-    "hint": "Between 8 and 72 characters, different from your current password.",
+    "hint": "8–72 characters, up to 72 UTF-8 bytes; cannot contain only whitespace.",
     "submit": "Update password",
-    "success": "Password changed"
+    "success": "Password changed. Please sign in again.",
+    "request": "Send verification code",
+    "codeSent": "Password change code sent. Check your email.",
+    "confirmTitle": "Confirm password change",
+    "confirmDescription": "Use the password change code sent to your account email and choose a new password.",
+    "localOnly": "No local password yet? Choose “Set your first password” in your account.",
+    "signOutNotice": "Changing your password will sign you out. Sign in again with the new password.",
+    "newCodeHint": "Request another email code if yours expires or runs out of attempts.",
+    "startAgain": "Request a new code / back to account",
+    "missingEmail": "Your profile has no valid email. Reload your profile to continue.",
+    "cancel": "Go back"
+  },
+  "setPassword": {
+    "title": "Set your first password",
+    "description": "For Google accounts without a local password. No OTP or current password is needed.",
+    "password": "New sign-in password",
+    "confirm": "Confirm sign-in password",
+    "submit": "Set password"
+  },
+  "google": {
+    "title": "Link Google",
+    "description": "Choose the Google account with email {{email}} to add this sign-in method.",
+    "success": "Google linked. You can use Google or your existing sign-in method.",
+    "conflict": "Unable to link. Choose the Google account matching your app email. It may already be linked to another account."
   }
 }

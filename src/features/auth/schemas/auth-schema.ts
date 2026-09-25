@@ -15,20 +15,37 @@ export const registerSchema = z
     path: ["confirmPassword"],
   })
 
-export const changePasswordSchema = z
+export const otpSchema = z.string().regex(/^[0-9]{6}$/, validationKey("otpInvalid"))
+export const emailVerificationSchema = z.object({ otp: otpSchema })
+
+export const forgotPasswordSchema = z.object({ email: emailSchema })
+
+export const requestPasswordChangeSchema = z.object({
+  currentPassword: z
+    .string()
+    .min(1, validationKey("currentPasswordRequired"))
+    .max(72, validationKey("passwordMax")),
+})
+
+export const passwordConfirmationSchema = z
   .object({
-    oldPassword: z.string().min(1, validationKey("currentPasswordRequired")),
+    otp: otpSchema,
     newPassword: passwordSchema,
-    confirmNewPassword: z.string().min(1, validationKey("confirmNewPasswordRequired")),
+    confirmPassword: passwordSchema,
   })
-  .refine((values) => values.newPassword === values.confirmNewPassword, {
+  .refine((values) => values.newPassword === values.confirmPassword, {
     message: validationKey("passwordMismatch"),
-    path: ["confirmNewPassword"],
-  })
-  .refine((values) => values.newPassword !== values.oldPassword, {
-    message: validationKey("passwordDifferent"),
-    path: ["newPassword"],
+    path: ["confirmPassword"],
   })
 
 export type RegisterFormValues = z.infer<typeof registerSchema>
-export type ChangePasswordValues = z.infer<typeof changePasswordSchema>
+
+export const setPasswordSchema = z
+  .object({
+    newPassword: passwordSchema,
+    confirmPassword: passwordSchema,
+  })
+  .refine((values) => values.newPassword === values.confirmPassword, {
+    message: validationKey("passwordMismatch"),
+    path: ["confirmPassword"],
+  })

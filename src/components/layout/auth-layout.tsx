@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next"
 import { Brand } from "@/components/layout/brand"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { ModeToggle } from "@/components/mode-toggle"
+import { ErrorState, PageLoading } from "@/components/ui/feedback"
+import { useProfile } from "@/features/profile/hooks/use-profile"
 import { useSession } from "@/features/auth/hooks/use-session"
 import { getReturnTo } from "@/features/auth/lib/session"
 
@@ -30,8 +32,18 @@ export const AuthLayout = () => {
   ]
 
   const session = useSession()
+  const profile = useProfile()
   const location = useLocation()
-  if (session) return <Navigate to={getReturnTo(location.search)} replace />
+  const emailAction =
+    location.pathname === "/auth/forgot-password" || location.pathname === "/auth/verify-email"
+  const resetNotice =
+    location.pathname === "/auth/login" && location.state?.notice === "passwordChanged"
+  if (session && !emailAction && !resetNotice) {
+    if (profile.isPending) return <PageLoading />
+    if (profile.isError)
+      return <ErrorState error={profile.error} onRetry={() => void profile.refetch()} />
+    return <Navigate to={getReturnTo(location.search)} replace />
+  }
 
   return (
     <div className="min-h-svh bg-background">

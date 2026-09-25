@@ -18,7 +18,6 @@
   "passwordMismatch": "Passwords do not match",
   "currentPasswordRequired": "Please enter your current password",
   "confirmNewPasswordRequired": "Please confirm your new password",
-  "passwordDifferent": "New password must differ from your current password",
   "mealTypeRequired": "Please select a meal type",
   "foodNameRequired": "Please enter a food name",
   "foodNameMax": "Name must be at most 255 characters",
@@ -26,5 +25,7 @@
   "quantityPositive": "Portion weight must be greater than 0",
   "quantityMax": "Portion weight is too large",
   "quantityPrecision": "Portion weight can have at most 2 decimal places",
-  "roleRequired": "Please select a role"
+  "roleRequired": "Please select a role",
+  "otpInvalid": "Enter a 6-digit verification code",
+  "passwordBlank": "Password cannot contain only whitespace"
 }

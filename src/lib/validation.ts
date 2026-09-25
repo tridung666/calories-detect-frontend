@@ -18,6 +18,7 @@ export const fullNameSchema = z
 export const passwordSchema = z
   .string()
   .min(8, validationKey("passwordMin"))
+  .refine((value) => value.trim().length > 0, validationKey("passwordBlank"))
   .max(72, validationKey("passwordMax"))
   .refine((value) => new TextEncoder().encode(value).length <= 72, validationKey("passwordBytes"))
 

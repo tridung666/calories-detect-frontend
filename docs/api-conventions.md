@@ -38,7 +38,11 @@ Authorization header:
 
 Bearer <access_token>
 
-Refresh token should be handled separately.
+Access tokens are memory-only. Never persist authentication tokens in browser storage.
+Refresh tokens are sent only by the API-owned HttpOnly, SameSite=Lax cookie.
+Use credentials on all Axios requests. Login, Google login, refresh and logout
+require X-XSRF-TOKEN from GET /auth/csrf. Refresh and logout send no JSON body.
+See [the auth contract](./auth-api-sync.md).
 
 ---
 
@@ -98,11 +102,11 @@ size
 Response:
 
 {
-    "content": [],
-    "page": 0,
-    "size": 10,
-    "totalElements": 100,
-    "totalPages": 10
+"content": [],
+"page": 0,
+"size": 10,
+"totalElements": 100,
+"totalPages": 10
 }
 
 Never hardcode pagination.

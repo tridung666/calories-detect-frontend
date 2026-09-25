@@ -8,6 +8,7 @@ import { FormInput } from "@/components/ui/form-field"
 import { SubmitButton } from "@/components/ui/submit-button"
 import { AuthCard } from "@/features/auth/components/auth-card"
 import { useRegister } from "@/features/auth/hooks/use-auth-mutations"
+import { startCooldown, verificationCooldownKey } from "@/features/auth/lib/verification"
 import { registerSchema, type RegisterFormValues } from "@/features/auth/schemas/auth-schema"
 import { notification } from "@/lib/notification"
 import { i18n } from "@/lib/i18n/i18n"
@@ -43,9 +44,13 @@ export const RegisterPage = () => {
         className="space-y-4"
         onSubmit={handleSubmit((values) =>
           mutation.mutate(values, {
-            onSuccess: () => {
+            onSuccess: (account) => {
               notification.success(i18n.t("auth:register.success"))
-              void navigate("/auth/login")
+              startCooldown(verificationCooldownKey(account.email))
+              void navigate("/auth/verify-email", {
+                replace: true,
+                state: { email: account.email },
+              })
             },
           }),
         )}

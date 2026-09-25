@@ -17,5 +17,13 @@
   "generic": "Đã xảy ra lỗi. Vui lòng thử lại.",
   "timeout": "Máy chủ phản hồi quá lâu. Vui lòng thử lại.",
   "network": "Không thể kết nối đến máy chủ.",
-  "server": "Máy chủ đang gặp sự cố. Vui lòng thử lại sau."
+  "server": "Máy chủ đang gặp sự cố. Vui lòng thử lại sau.",
+  "emailNotVerified": "Vui lòng xác minh email trước khi đăng nhập.",
+  "invalidOtp": "Mã không hợp lệ, hết hạn, đã dùng, hết lượt thử hoặc tài khoản không đủ điều kiện. Vui lòng yêu cầu mã mới khi có thể.",
+  "googleAccountConflict": "Email này đã có tài khoản. Hãy đăng nhập bằng phương thức hiện tại rồi liên kết Google trong phần tài khoản.",
+  "emailDeliveryFailed": "Không thể gửi email xác minh. Vui lòng thử lại sau.",
+  "localPasswordRequired": "Tài khoản chưa có mật khẩu riêng. Hãy đặt mật khẩu lần đầu trong phần tài khoản.",
+  "otpRateLimited": "Vui lòng chờ 60 giây giữa các lần yêu cầu. Tối đa 5 mã mỗi giờ; hãy thử lại sau nếu đã đạt giới hạn.",
+  "invalidNewPassword": "Mật khẩu phải có 8–72 ký tự và không quá 72 byte UTF-8.",
+  "localPasswordExists": "Tài khoản đã có mật khẩu. Hãy dùng đổi mật khẩu hoặc quên mật khẩu."
 }

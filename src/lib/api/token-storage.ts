@@ -1,45 +1,70 @@
-const ACCESS_TOKEN_KEY = "accessToken"
-const REFRESH_TOKEN_KEY = "refreshToken"
-const SESSION_EVENT = "calories-detect:session"
+const LEGACY_KEYS = ["accessToken", "refreshToken", "calories-detect:tokens"]
+const LOGOUT_KEY = "calories-detect:logout"
+let accessToken: string | null = null
+let expiresAt: number | undefined
 let sessionVersion = 0
+const listeners = new Set<() => void>()
+const notify = () => listeners.forEach((listener) => listener())
 
-const notifySession = () => window.dispatchEvent(new Event(SESSION_EVENT))
+export const removeLegacyTokens = () => {
+  for (const storageName of ["localStorage", "sessionStorage"] as const) {
+    try {
+      for (const key of LEGACY_KEYS) window[storageName].removeItem(key)
+    } catch {
+      // Private browsing or storage policy must not prevent an in-memory session.
+    }
+  }
+}
+
+const clear = () => {
+  sessionVersion += 1
+  accessToken = null
+  expiresAt = undefined
+  removeLegacyTokens()
+  notify()
+}
 
 export const tokenStorage = {
   getSessionVersion: () => sessionVersion,
-  getAccessToken(): string | null {
-    return localStorage.getItem(ACCESS_TOKEN_KEY)
-  },
-
-  getRefreshToken(): string | null {
-    return localStorage.getItem(REFRESH_TOKEN_KEY)
-  },
-
-  setTokens(accessToken: string, refreshToken: string, options?: { isRefresh: boolean }): void {
+  getAccessToken: () => accessToken,
+  getExpiresAt: () => expiresAt,
+  setAccessToken: (token: string, options?: { isRefresh?: boolean; expiresIn?: number }) => {
     if (!options?.isRefresh) sessionVersion += 1
-    localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken)
-    localStorage.setItem(ACCESS_TOKEN_KEY, accessToken)
-    notifySession()
+    accessToken = token
+    const ttl = options?.expiresIn
+    expiresAt =
+      typeof ttl === "number" && Number.isFinite(ttl) ? Date.now() + ttl * 1000 : undefined
+    removeLegacyTokens()
+    notify()
   },
-
-  clearTokens(): void {
-    sessionVersion += 1
-    localStorage.removeItem(ACCESS_TOKEN_KEY)
-    localStorage.removeItem(REFRESH_TOKEN_KEY)
-    notifySession()
+  clearTokens: () => {
+    clear()
+    // This event contains no credentials. Storage events also reach suspended tabs.
+    try {
+      localStorage.setItem(LOGOUT_KEY, crypto.randomUUID())
+    } catch {
+      // BroadcastChannel is the fallback when storage is unavailable.
+    }
+    channel?.postMessage("logout")
   },
   subscribe: (listener: () => void) => {
-    const onStorage = (event: StorageEvent) => {
-      if (event.key === ACCESS_TOKEN_KEY || event.key === null) {
-        sessionVersion += 1
-        listener()
-      }
-    }
-    window.addEventListener(SESSION_EVENT, listener)
-    window.addEventListener("storage", onStorage)
+    listeners.add(listener)
     return () => {
-      window.removeEventListener(SESSION_EVENT, listener)
-      window.removeEventListener("storage", onStorage)
+      listeners.delete(listener)
     }
   },
+}
+
+let channel: BroadcastChannel | undefined
+if (typeof window !== "undefined") {
+  removeLegacyTokens()
+  window.addEventListener("storage", (event) => {
+    if (event.key === LOGOUT_KEY) clear()
+  })
+  if (typeof BroadcastChannel !== "undefined") {
+    channel = new BroadcastChannel(LOGOUT_KEY)
+    channel.onmessage = (event: MessageEvent<unknown>) => {
+      if (event.data === "logout") clear()
+    }
+  }
 }

@@ -1,6 +1,6 @@
-export type ApiResponse<T> = {
-  success?: boolean
-  code: number
+export type ApiSuccessResponse<T> = {
+  success: true
+  code: 200
   message: string
   data: T
 }
@@ -9,8 +9,10 @@ export type ApiErrorResponse = {
   success: false
   code: number
   message: string
-  data?: unknown
+  data?: never
 }
+
+export type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse
 
 export type PageParams = { page: number; size: number }
 
