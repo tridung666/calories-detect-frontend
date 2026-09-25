@@ -5,6 +5,8 @@ import { PageHeader } from "@/components/layout/page-header"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ErrorState, PageLoading } from "@/components/ui/feedback"
+import { GoogleLinkCard } from "@/features/profile/components/google-link-card"
+import { SetPasswordForm } from "@/features/profile/components/set-password-form"
 import { ChangePasswordForm } from "@/features/profile/components/change-password-form"
 import { useProfile } from "@/features/profile/hooks/use-profile"
 import { formatDate, getInitials } from "@/lib/format"
@@ -56,7 +58,11 @@ export const ProfilePage = () => {
             </dl>
           </CardContent>
         </Card>
-        <ChangePasswordForm />
+        <div className="space-y-6" key={profile.id}>
+          <ChangePasswordForm />
+          <SetPasswordForm email={profile.email} userId={profile.id} />
+          <GoogleLinkCard email={profile.email} userId={profile.id} />
+        </div>
       </div>
     </>
   )

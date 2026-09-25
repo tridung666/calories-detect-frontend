@@ -6,12 +6,35 @@
   "updatedAt": "Cập nhật lần cuối",
   "password": {
     "title": "Đổi mật khẩu",
-    "description": "Cập nhật mật khẩu để bảo vệ tài khoản của bạn.",
+    "description": "Trước tiên, xác nhận mật khẩu hiện tại để nhận mã xác minh qua email.",
     "current": "Mật khẩu hiện tại",
     "new": "Mật khẩu mới",
     "confirm": "Xác nhận mật khẩu mới",
-    "hint": "Từ 8 đến 72 ký tự, khác mật khẩu hiện tại.",
+    "hint": "Từ 8–72 ký tự, tối đa 72 byte UTF-8; không chỉ gồm khoảng trắng.",
     "submit": "Cập nhật mật khẩu",
-    "success": "Đã đổi mật khẩu"
+    "success": "Đã đổi mật khẩu. Vui lòng đăng nhập lại.",
+    "request": "Gửi mã xác minh",
+    "codeSent": "Đã gửi mã đổi mật khẩu. Vui lòng kiểm tra email.",
+    "confirmTitle": "Xác nhận đổi mật khẩu",
+    "confirmDescription": "Dùng mã đổi mật khẩu được gửi đến email tài khoản và chọn mật khẩu mới.",
+    "localOnly": "Chưa có mật khẩu riêng? Chọn “Đặt mật khẩu lần đầu” trong phần tài khoản.",
+    "signOutNotice": "Bạn sẽ được đăng xuất sau khi đổi mật khẩu. Hãy đăng nhập lại bằng mật khẩu mới.",
+    "newCodeHint": "Bạn có thể yêu cầu gửi lại mã qua email khi mã hết hạn hoặc hết lượt thử.",
+    "startAgain": "Yêu cầu mã mới / quay lại tài khoản",
+    "missingEmail": "Chưa có email hợp lệ trong hồ sơ. Hãy tải lại hồ sơ để tiếp tục.",
+    "cancel": "Quay lại"
+  },
+  "setPassword": {
+    "title": "Đặt mật khẩu lần đầu",
+    "description": "Dành cho tài khoản Google chưa có mật khẩu riêng. Không cần OTP hoặc mật khẩu hiện tại.",
+    "password": "Mật khẩu đăng nhập mới",
+    "confirm": "Xác nhận mật khẩu đăng nhập",
+    "submit": "Đặt mật khẩu"
+  },
+  "google": {
+    "title": "Liên kết Google",
+    "description": "Chọn tài khoản Google có email {{email}} để thêm phương thức đăng nhập.",
+    "success": "Đã liên kết Google. Bạn có thể đăng nhập bằng Google hoặc phương thức hiện tại.",
+    "conflict": "Không thể liên kết. Hãy chọn đúng tài khoản Google có email đang dùng trong ứng dụng. Tài khoản Google có thể đã liên kết với tài khoản khác."
   }
 }
