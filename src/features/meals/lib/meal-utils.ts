@@ -6,22 +6,22 @@ export const mealTypeInfo = {
   BREAKFAST: {
     labelKey: "meals:types.BREAKFAST",
     icon: Coffee,
-    className: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+    className: "bg-chart-1/10 text-chart-1",
   },
   LUNCH: {
     labelKey: "meals:types.LUNCH",
     icon: Sun,
-    className: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+    className: "bg-chart-2/10 text-chart-2",
   },
   DINNER: {
     labelKey: "meals:types.DINNER",
     icon: Moon,
-    className: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
+    className: "bg-chart-3/10 text-chart-3",
   },
   SNACK: {
     labelKey: "meals:types.SNACK",
     icon: Apple,
-    className: "bg-pink-500/10 text-pink-600 dark:text-pink-400",
+    className: "bg-chart-4/10 text-chart-4",
   },
 } as const satisfies Record<
   MealType,

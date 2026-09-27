@@ -21,21 +21,21 @@ export const NutritionStats = ({ nutrition }: { nutrition: Nutrition }) => {
       label: t("meals:nutrition.protein"),
       unit: t("meals:units.grams"),
       icon: Beef,
-      color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
+      color: "bg-chart-2/10 text-chart-2",
     },
     {
       key: "carbohydrateGrams",
       label: t("meals:nutrition.carbohydrates"),
       unit: t("meals:units.grams"),
       icon: Wheat,
-      color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+      color: "bg-chart-3/10 text-chart-3",
     },
     {
       key: "fatGrams",
       label: t("meals:nutrition.fat"),
       unit: t("meals:units.grams"),
       icon: Droplets,
-      color: "bg-cyan-500/10 text-cyan-700 dark:text-cyan-400",
+      color: "bg-chart-4/10 text-chart-4",
     },
   ] as const
   return (

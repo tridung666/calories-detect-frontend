@@ -66,13 +66,18 @@ Caption
 
 ## Colors
 
-Neutral background.
+Vegetable-inspired green accents in both light and dark themes.
 
-Primary color for actions.
+Use sage-tinted backgrounds and leaf-green primary actions in the light theme.
 
-Red only for destructive actions.
+Use black backgrounds, neutral charcoal surfaces, and neutral gray text and borders
+in the dark theme. Reserve green for actions, selected states, and chart highlights.
 
-Green only for success.
+Use shared theme tokens for surfaces, focus rings, navigation, and chart colors.
+
+Red only for destructive actions and errors.
+
+Green may indicate primary actions or success; distinguish status with labels and icons.
 
 ---
 
