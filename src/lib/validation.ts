@@ -29,3 +29,12 @@ export const nonNegativeIntegerSchema = z
   .int(validationKey("integerRequired"))
   .min(0, validationKey("nonNegative"))
   .max(2_147_483_647, validationKey("numberMax"))
+
+export const hasTwoDecimalPlaces = (value: number) =>
+  Math.abs(value - Math.round(value * 100) / 100) <= Number.EPSILON * Math.max(1, Math.abs(value))
+
+export const nutritionValueSchema = z
+  .number({ error: validationKey("numberInvalid") })
+  .min(0, validationKey("nonNegative"))
+  .max(2_147_483_647, validationKey("numberMax"))
+  .refine(hasTwoDecimalPlaces, validationKey("nutritionPrecision"))

@@ -27,5 +27,7 @@
   "quantityPrecision": "Portion weight can have at most 2 decimal places",
   "roleRequired": "Please select a role",
   "otpInvalid": "Enter a 6-digit verification code",
-  "passwordBlank": "Password cannot contain only whitespace"
+  "passwordBlank": "Password cannot contain only whitespace",
+  "nutritionPrecision": "Nutrition can have at most 2 decimal places",
+  "foodsRequired": "Add at least one food to save"
 }

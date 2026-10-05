@@ -6,6 +6,15 @@ import type messages from "@/locales/en/errors.json"
 
 type ErrorKey = keyof typeof messages
 
+export class ApiDataError extends Error {
+  readonly translationKey: ErrorKey
+  constructor(translationKey: ErrorKey) {
+    super(translationKey)
+    this.name = "ApiDataError"
+    this.translationKey = translationKey
+  }
+}
+
 const businessMessages: Partial<Record<number, ErrorKey>> = {
   10001: "emailTaken",
   10002: "accountNotFound",
@@ -32,6 +41,12 @@ const businessMessages: Partial<Record<number, ErrorKey>> = {
   15001: "imageTooLarge",
   15002: "imageUploadFailed",
   15003: "imageDeleteFailed",
+  16000: "mealImageRequired",
+  16001: "aiUnavailable",
+  16002: "aiTimeout",
+  16003: "aiInvalidResponse",
+  16004: "aiNoFood",
+  16005: "aiUnreadableImage",
 }
 
 const statusMessages: Partial<Record<number, ErrorKey>> = {
@@ -48,11 +63,13 @@ export const getApiErrorMessage = (
   error: unknown,
   fallbackMessage = i18n.t("errors:generic"),
 ): string => {
+  if (error instanceof ApiDataError) return i18n.t(`errors:${error.translationKey}`)
   if (!axios.isAxiosError<ApiErrorResponse>(error)) {
     return fallbackMessage
   }
 
-  if (error.code === "ECONNABORTED") return i18n.t("errors:timeout")
+  if (["ECONNABORTED", "ETIMEDOUT"].includes(error.code ?? ""))
+    return i18n.t(error.config?.url?.endsWith("/analyze") ? "errors:aiTimeout" : "errors:timeout")
 
   if (!error.response) {
     return i18n.t("errors:network")

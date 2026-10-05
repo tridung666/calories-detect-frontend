@@ -27,5 +27,7 @@
   "quantityPrecision": "Khối lượng tối đa 2 chữ số thập phân",
   "roleRequired": "Vui lòng chọn vai trò",
   "otpInvalid": "Vui lòng nhập mã xác minh gồm 6 chữ số",
-  "passwordBlank": "Mật khẩu không được chỉ gồm khoảng trắng"
+  "passwordBlank": "Mật khẩu không được chỉ gồm khoảng trắng",
+  "nutritionPrecision": "Dinh dưỡng tối đa 2 chữ số thập phân",
+  "foodsRequired": "Thêm ít nhất một món ăn để lưu"
 }

@@ -46,7 +46,6 @@ test("localizes meals, dates, numbers, dialogs, notifications and account pages"
       id: 1,
       mealId: 1,
       inputName: "Cơm gà",
-      normalizedName: null,
       quantityGrams: 1234.5,
       calories: 450,
       proteinGrams: 30,

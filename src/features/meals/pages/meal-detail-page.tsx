@@ -10,13 +10,14 @@ import { Card } from "@/components/ui/card"
 import { ConfirmDeleteDialog } from "@/components/ui/confirm-delete-dialog"
 import { EmptyState, ErrorState, PageLoading } from "@/components/ui/feedback"
 import { MealFormDialog } from "@/features/meals/components/meal-form-dialog"
+import { MealImageUpload } from "@/features/meals/components/meal-image-upload"
 import { MealItemFormDialog } from "@/features/meals/components/meal-item-form-dialog"
 import { MealItemsTable } from "@/features/meals/components/meal-items-table"
 import { NutritionStats } from "@/features/meals/components/nutrition-stats"
 import { useDeleteMealItem } from "@/features/meals/hooks/use-meal-mutations"
 import { useMeal, useMealItems } from "@/features/meals/hooks/use-meals"
 import { mealTypeInfo, sumNutrition } from "@/features/meals/lib/meal-utils"
-import type { MealItem } from "@/features/meals/types/meal"
+import type { Meal, MealItem } from "@/features/meals/types/meal"
 import { formatDate } from "@/lib/format"
 
 export const MealDetailPage = () => {
@@ -25,10 +26,6 @@ export const MealDetailPage = () => {
   const id = Number(useParams().mealId)
   const meal = useMeal(id)
   const items = useMealItems(id)
-  const deletion = useDeleteMealItem(id)
-  const [editingMeal, setEditingMeal] = useState(false)
-  const [editingItem, setEditingItem] = useState<MealItem | "new" | null>(null)
-  const [deletingItem, setDeletingItem] = useState<MealItem | null>(null)
 
   if (!Number.isSafeInteger(id) || id <= 0)
     return (
@@ -54,6 +51,16 @@ export const MealDetailPage = () => {
       />
     )
 
+  return <MealDetailContent key={id} meal={meal.data} items={items.data} />
+}
+
+const MealDetailContent = ({ meal, items }: { meal: Meal; items: MealItem[] }) => {
+  const { t } = useTranslation(["common", "meals"])
+  const id = meal.id
+  const deletion = useDeleteMealItem(id)
+  const [editingMeal, setEditingMeal] = useState(false)
+  const [editingItem, setEditingItem] = useState<MealItem | "new" | null>(null)
+  const [deletingItem, setDeletingItem] = useState<MealItem | null>(null)
   return (
     <>
       <Button variant="ghost" asChild className="-ml-2 w-fit">
@@ -63,10 +70,10 @@ export const MealDetailPage = () => {
         </Link>
       </Button>
       <PageHeader
-        title={t(mealTypeInfo[meal.data.mealType].labelKey)}
+        title={t(mealTypeInfo[meal.mealType].labelKey)}
         description={t("meals:detail.description", {
-          date: formatDate(meal.data.mealDate),
-          count: items.data.length,
+          date: formatDate(meal.mealDate),
+          count: items.length,
         })}
         action={
           <>
@@ -81,15 +88,16 @@ export const MealDetailPage = () => {
           </>
         }
       />
-      <NutritionStats nutrition={sumNutrition(items.data)} />
+      <NutritionStats nutrition={sumNutrition(items)} />
+      <MealImageUpload key={`${id}:${meal.imageUrl ?? ""}`} meal={meal} itemCount={items.length} />
       <Card className="gap-0 rounded-lg p-0">
         <div className="border-b px-6 py-4">
           <h2 className="font-semibold">{t("meals:detail.foods")}</h2>
           <p className="mt-1 text-xs text-muted-foreground">{t("meals:detail.nutritionHint")}</p>
         </div>
-        {items.data.length ? (
+        {items.length ? (
           <MealItemsTable
-            items={items.data}
+            items={items}
             onEdit={setEditingItem}
             onDelete={(item) => {
               deletion.reset()
@@ -110,7 +118,7 @@ export const MealDetailPage = () => {
           />
         )}
       </Card>
-      {editingMeal && <MealFormDialog meal={meal.data} onClose={() => setEditingMeal(false)} />}
+      {editingMeal && <MealFormDialog meal={meal} onClose={() => setEditingMeal(false)} />}
       {editingItem && (
         <MealItemFormDialog
           mealId={id}

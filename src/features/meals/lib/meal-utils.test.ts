@@ -5,7 +5,6 @@ import { mealItemSchema, mealSchema } from "@/features/meals/schemas/meal-schema
 
 const item = {
   inputName: " Cơm gà ",
-  normalizedName: "",
   quantityGrams: 250,
   calories: 450,
   proteinGrams: 30,
@@ -25,9 +24,17 @@ describe("meal nutrition contract", () => {
   })
 
   it("accepts zero nutrition and fractional portions with two decimal places", () => {
-    const parsed = mealItemSchema.parse({ ...item, calories: 0, quantityGrams: 0.25 })
+    const parsed = mealItemSchema.parse({
+      ...item,
+      calories: 0,
+      proteinGrams: 46.5,
+      fatGrams: 6.48,
+      quantityGrams: 0.25,
+    })
     expect(parsed.inputName).toBe("Cơm gà")
     expect(parsed.quantityGrams).toBe(0.25)
+    expect(parsed.proteinGrams).toBe(46.5)
+    expect(parsed.fatGrams).toBe(6.48)
   })
 
   it.each([
@@ -35,7 +42,8 @@ describe("meal nutrition contract", () => {
     { quantityGrams: -1 },
     { quantityGrams: 1.001 },
     { calories: -1 },
-    { calories: 1.5 },
+    { calories: 1.001 },
+    { fatGrams: 0.001 },
     { proteinGrams: Number.NaN },
     { carbohydrateGrams: 2_147_483_648 },
     { inputName: "   " },

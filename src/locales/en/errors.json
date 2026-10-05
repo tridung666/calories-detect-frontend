@@ -29,5 +29,11 @@
   "invalidImage": "Choose a non-empty JPEG, PNG or WebP image.",
   "imageTooLarge": "Image must not exceed 5 MiB.",
   "imageUploadFailed": "Unable to upload the image. Please try again.",
-  "imageDeleteFailed": "Unable to delete the image. Please try again."
+  "imageDeleteFailed": "Unable to delete the image. Please try again.",
+  "mealImageRequired": "Upload a meal photo before analyzing.",
+  "aiUnavailable": "Analysis is unavailable. Try again or add foods manually.",
+  "aiTimeout": "Analysis took too long. Try again or add foods manually.",
+  "aiInvalidResponse": "The analysis result is invalid. Try again or add foods manually.",
+  "aiNoFood": "No foods were detected. Take a clearer photo or add foods manually.",
+  "aiUnreadableImage": "The meal photo could not be read. Upload a different photo."
 }

@@ -64,3 +64,52 @@ test("previews, validates and uploads an avatar, updating navigation and survivi
     savedUrl,
   )
 })
+
+test("meal image failures allow retry, pending prevents duplicates, replacement persists", async ({
+  page,
+}, testInfo) => {
+  const state = await mockApi(page)
+  const oldUrl = "https://images.example.test/old.png"
+  const savedUrl = "https://images.example.test/meal.png"
+  state.meals = [{ id: 1, mealType: "LUNCH", mealDate: TEST_DATE, imageUrl: oldUrl }]
+  await page.route("https://images.example.test/*", (route) =>
+    route.fulfill({ contentType: "image/png", body: png }),
+  )
+  let uploads = 0
+  let release: () => void = () => {}
+  const held = new Promise<void>((resolve) => {
+    release = resolve
+  })
+  await page.route("**/api/meals/1/image", async (route) => {
+    uploads++
+    expect(route.request().method()).toBe("PUT")
+    expect(route.request().headers()["content-type"]).toMatch(/^multipart\/form-data; boundary=/)
+    if (uploads === 1)
+      return route.fulfill({ status: 500, json: { code: 15002, message: "Failure" } })
+    await held
+    state.meals[0].imageUrl = savedUrl
+    await route.fulfill({ json: { code: 200, data: state.meals[0] } })
+  })
+  await login(page, "/meals/1")
+  const picker = page.getByLabel("Chọn ảnh bữa ăn", { exact: true }).and(page.locator("input"))
+  const preview = page.getByRole("img", { name: "Chọn ảnh bữa ăn", exact: true })
+  await expect(preview).toHaveAttribute("src", oldUrl)
+  await picker.setInputFiles(image)
+  await page.getByRole("button", { name: "Tải ảnh lên" }).click()
+  await expect(page.getByRole("alert")).toContainText("Chưa thể tải ảnh lên")
+  expect(state.meals[0].imageUrl).toBe(oldUrl)
+  await page.getByRole("button", { name: "Tải ảnh lên" }).click()
+  await expect(picker).toBeDisabled()
+  await expect(page.getByRole("button", { name: "Hủy", exact: true })).toBeDisabled()
+  await expect(page.getByRole("button", { name: "Đang xử lý…", exact: true })).toBeDisabled()
+  release()
+  await expect(preview).toHaveAttribute("src", savedUrl)
+  await expect(page.getByRole("alert")).toHaveCount(0)
+  expect(uploads).toBe(2)
+  await page.screenshot({ path: testInfo.outputPath("meal-image-desktop.png"), fullPage: true })
+  await page.setViewportSize({ width: 390, height: 844 })
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  await page.screenshot({ path: testInfo.outputPath("meal-image-mobile.png"), fullPage: true })
+  await page.reload()
+  await expect(preview).toHaveAttribute("src", savedUrl)
+})
