@@ -41,11 +41,6 @@ export const MealItemsTable = ({
           <TableRow key={item.id}>
             <TableCell className="max-w-64 py-4 pl-6 whitespace-normal">
               <p className="font-medium wrap-break-word">{item.inputName}</p>
-              {item.normalizedName && (
-                <p className="mt-1 text-xs text-muted-foreground wrap-break-word">
-                  {item.normalizedName}
-                </p>
-              )}
             </TableCell>
             <TableCell className="text-right tabular-nums">
               {t("meals:items.grams", { value: formatNumber(item.quantityGrams) })}

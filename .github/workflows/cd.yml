@@ -134,6 +134,8 @@ jobs:
             set -e
 
             cd /opt/calories-detect
+            exec 9>.deploy.lock
+            flock -w 300 9
 
             DEPLOY_TAG="${{ needs.docker.outputs.deploy_tag }}"
 

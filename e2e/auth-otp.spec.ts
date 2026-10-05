@@ -78,7 +78,7 @@ test("editing email clears secrets; resending preserves OTP and shares cooldown 
   const stored = await page.evaluate(() => JSON.stringify({ ...localStorage, ...sessionStorage }))
   expect(stored).not.toContain(TEST_PASSWORD)
   expect(stored).not.toContain("012345")
-  await login(page, "/profile")
+  await login(page, "/settings")
   // The first request to test@example.com is now more than 60 seconds old.
   await page.getByLabel("Mật khẩu hiện tại", { exact: true }).fill(TEST_PASSWORD)
   await page.getByRole("button", { name: "Gửi mã xác minh", exact: true }).click()
@@ -174,7 +174,7 @@ test("change password validates current password, resends without retaining it, 
 }) => {
   const state = await mockApi(page)
   await page.clock.install()
-  await login(page, "/profile")
+  await login(page, "/settings")
   await page.getByLabel("Mật khẩu hiện tại", { exact: true }).fill("wrong")
   await page.getByRole("button", { name: "Gửi mã xác minh", exact: true }).click()
   await expect(page.getByLabel("Mật khẩu hiện tại", { exact: true })).toHaveAttribute(
@@ -212,7 +212,7 @@ test("change password validates current password, resends without retaining it, 
   ).toEqual([null, null])
   expect(state.requests.some((r) => r.path === "/auth/logout")).toBe(false)
   expect(state.password).toBe(" NewPassword123! ")
-  await page.goto("/profile")
+  await page.goto("/settings")
   await expect(page).toHaveURL(/\/auth\/login/)
 })
 
@@ -251,14 +251,14 @@ test("missing profile email is reloaded before sending; leaving discards current
       },
     }),
   )
-  await login(page, "/profile")
+  await login(page, "/settings")
   await page.getByLabel("Mật khẩu hiện tại", { exact: true }).fill(TEST_PASSWORD)
   await page.getByRole("button", { name: "Gửi mã xác minh", exact: true }).click()
   await expect(page.getByLabel("Mã xác minh", { exact: true })).toBeVisible()
   expect(loads).toBeGreaterThanOrEqual(2)
   await page.getByRole("link", { name: "Tổng quan", exact: true }).first().click()
   await expect(page).toHaveURL(/\/dashboard$/)
-  await page.getByRole("link", { name: "Tài khoản", exact: true }).first().click()
+  await page.getByRole("link", { name: "Cài đặt", exact: true }).first().click()
   await expect(page.getByLabel("Mật khẩu hiện tại", { exact: true })).toHaveValue("")
 })
 test("Google-only accounts keep their session and get an actionable local-password error", async ({
@@ -269,7 +269,7 @@ test("Google-only accounts keep their session and get an actionable local-passwo
   await page.goto("/auth/login")
   await page.getByRole("button", { name: "Test Google sign-in" }).click()
   await expect(page).toHaveURL(/\/dashboard$/)
-  await page.goto("/profile")
+  await page.goto("/settings")
   await page.getByLabel("Mật khẩu hiện tại", { exact: true }).fill(TEST_PASSWORD)
   await page.getByRole("button", { name: "Gửi mã xác minh", exact: true }).click()
   await expect(
@@ -301,7 +301,7 @@ for (const flow of ["forgot", "change"] as const) {
   test(`${flow} request blocks repeated submissions while pending`, async ({ page }) => {
     await mockApi(page)
     if (flow === "change") {
-      await login(page, "/profile")
+      await login(page, "/settings")
       await page.getByLabel("Mật khẩu hiện tại", { exact: true }).fill(TEST_PASSWORD)
     } else {
       await page.goto("/auth/forgot-password")
@@ -342,7 +342,7 @@ test("missing email after profile reload prevents requesting an OTP", async ({ p
   await page.route("**/api/user/1", (route) =>
     route.fulfill({ json: { success: true, code: 200, data: { ...state.users[0], email: "" } } }),
   )
-  await login(page, "/profile")
+  await login(page, "/settings")
   await page.getByLabel("Mật khẩu hiện tại", { exact: true }).fill(TEST_PASSWORD)
   await page.getByRole("button", { name: "Gửi mã xác minh", exact: true }).click()
   await expect(page.getByRole("alert")).toContainText("Chưa có email hợp lệ trong hồ sơ")

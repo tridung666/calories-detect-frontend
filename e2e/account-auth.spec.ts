@@ -32,6 +32,15 @@ test("Google-only users can add a password without OTP, then sign in locally", a
   await page.getByRole("button", { name: "Test Google sign-in" }).click()
   await expect(page).toHaveURL(/\/dashboard$/)
   await page.goto("/profile")
+  await expect(page.getByLabel("Mật khẩu hiện tại", { exact: true })).toHaveCount(0)
+  await expect(page.getByRole("button", { name: "Test Google sign-in" })).toHaveCount(0)
+  await page.getByRole("link", { name: "Cài đặt", exact: true }).click()
+  await expect(page).toHaveURL(/\/settings$/)
+  await expect(page.getByRole("heading", { name: "Cài đặt", exact: true })).toBeVisible()
+  await expect(page.getByRole("link", { name: "Cài đặt", exact: true })).toHaveAttribute(
+    "aria-current",
+    "page",
+  )
   await page.getByLabel("Mật khẩu đăng nhập mới", { exact: true }).fill("NewPassword123!")
   await page.getByLabel("Xác nhận mật khẩu đăng nhập", { exact: true }).fill("Mismatch123!")
   await page.getByRole("button", { name: "Đặt mật khẩu", exact: true }).click()
@@ -55,18 +64,22 @@ test("Google-only users can add a password without OTP, then sign in locally", a
 
 test("existing local password directs users to change password", async ({ page }) => {
   await mockApi(page)
-  await login(page, "/profile")
+  await login(page, "/settings")
   await page.getByLabel("Mật khẩu đăng nhập mới", { exact: true }).fill(TEST_PASSWORD)
   await page.getByLabel("Xác nhận mật khẩu đăng nhập", { exact: true }).fill(TEST_PASSWORD)
   await page.getByRole("button", { name: "Đặt mật khẩu", exact: true }).click()
   await expect(page.getByRole("alert")).toContainText("Tài khoản đã có mật khẩu")
   await page.getByRole("link", { name: "Đổi mật khẩu", exact: true }).click()
-  await expect(page).toHaveURL(/\/profile\/change-password$/)
+  await expect(page).toHaveURL(/\/settings\/change-password$/)
+  await page.getByRole("link", { name: "Quay lại cài đặt", exact: true }).click()
+  await expect(page).toHaveURL(/\/settings$/)
+  await page.goto("/profile/change-password")
+  await expect(page).toHaveURL(/\/settings\/change-password$/)
 })
 
 test("Google linking handles conflicts and preserves the current session", async ({ page }) => {
   const state = await mockApi(page)
-  await login(page, "/profile")
+  await login(page, "/settings")
   const refreshes = state.requests.filter((r) => r.path === "/auth/refresh-token").length
   state.googleConflict = true
   await page.getByRole("button", { name: "Test Google sign-in" }).click()

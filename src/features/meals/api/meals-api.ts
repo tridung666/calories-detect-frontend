@@ -4,10 +4,24 @@ import type {
   MealItem,
   MealItemRequest,
   MealRequest,
+  ConfirmMealAnalysisRequest,
+  MealDetails,
 } from "@/features/meals/types/meal"
+import { mealAnalysisSchema } from "@/features/meals/schemas/meal-schema"
+import { ApiDataError } from "@/lib/api/api-error"
 import type { ApiSuccessResponse, BackendPageResponse } from "@/lib/api/api-types"
 import { normalizePage, toPageParams } from "@/lib/api/pagination"
 import { apiClient } from "@/lib/axios"
+import { imageFormData, imageUploadConfig } from "@/lib/api/image-upload"
+
+export const uploadMealImage = async (mealId: number, file: File) => {
+  const response = await apiClient.put<ApiSuccessResponse<Meal>>(
+    `/meals/${mealId}/image`,
+    imageFormData(file),
+    imageUploadConfig,
+  )
+  return response.data.data
+}
 
 export const getMeals = async ({ page, size, ...filters }: MealFilters, signal?: AbortSignal) => {
   const response = await apiClient.get<ApiSuccessResponse<BackendPageResponse<Meal>>>("/meal", {
@@ -23,7 +37,31 @@ export const getMeal = async (id: number, signal?: AbortSignal) => {
 }
 
 export const createMeal = async (payload: MealRequest) => {
-  const response = await apiClient.post<ApiSuccessResponse<Meal>>("/meal/create", payload)
+  const response = await apiClient.post<ApiSuccessResponse<Meal>>("/meal", payload)
+  return response.data.data
+}
+
+export const deleteMealImage = async (mealId: number) => {
+  const response = await apiClient.delete<ApiSuccessResponse<Meal>>(`/meals/${mealId}/image`)
+  return response.data.data
+}
+
+export const analyzeMeal = async (mealId: number, signal?: AbortSignal) => {
+  const response = await apiClient.post<ApiSuccessResponse<unknown>>(
+    `/meals/${mealId}/analyze`,
+    undefined,
+    { timeout: 90_000, signal },
+  )
+  const result = mealAnalysisSchema.safeParse(response.data.data)
+  if (!result.success || result.data.mealId !== mealId) throw new ApiDataError("aiInvalidResponse")
+  return result.data
+}
+
+export const confirmMealAnalysis = async (mealId: number, payload: ConfirmMealAnalysisRequest) => {
+  const response = await apiClient.post<ApiSuccessResponse<MealDetails>>(
+    `/meals/${mealId}/confirm-analysis`,
+    payload,
+  )
   return response.data.data
 }
 

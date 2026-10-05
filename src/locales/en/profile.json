@@ -1,5 +1,5 @@
 {
-  "description": "Your personal information and account security.",
+  "description": "Your personal information and profile photo.",
   "personalInformation": "Personal information",
   "active": "Active",
   "joinedAt": "Joined on",
@@ -17,7 +17,7 @@
     "codeSent": "Password change code sent. Check your email.",
     "confirmTitle": "Confirm password change",
     "confirmDescription": "Use the password change code sent to your account email and choose a new password.",
-    "localOnly": "No local password yet? Choose “Set your first password” in your account.",
+    "localOnly": "No local password yet? Choose “Set your first password” below.",
     "signOutNotice": "Changing your password will sign you out. Sign in again with the new password.",
     "newCodeHint": "Request another email code if yours expires or runs out of attempts.",
     "startAgain": "Request a new code / back to account",
@@ -36,5 +36,14 @@
     "description": "Choose the Google account with email {{email}} to add this sign-in method.",
     "success": "Google linked. You can use Google or your existing sign-in method.",
     "conflict": "Unable to link. Choose the Google account matching your app email. It may already be linked to another account."
-  }
+  },
+  "avatar": {
+    "label": "Profile photo",
+    "success": "Profile photo updated.",
+    "remove": "Delete profile photo",
+    "deleteTitle": "Delete profile photo?",
+    "deleteDescription": "Your profile photo will be replaced with initials from your name.",
+    "deleted": "Profile photo deleted."
+  },
+  "settingsDescription": "Manage your password and sign-in methods."
 }

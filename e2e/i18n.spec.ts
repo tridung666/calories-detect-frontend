@@ -46,7 +46,6 @@ test("localizes meals, dates, numbers, dialogs, notifications and account pages"
       id: 1,
       mealId: 1,
       inputName: "Cơm gà",
-      normalizedName: null,
       quantityGrams: 1234.5,
       calories: 450,
       proteinGrams: 30,
@@ -75,6 +74,9 @@ test("localizes meals, dates, numbers, dialogs, notifications and account pages"
   await expect(page.getByText("09/12/2026 · 1 meal recorded", { exact: true })).toBeVisible()
   await page.goto("/profile")
   await expect(page.getByRole("heading", { name: "Account", exact: true })).toBeVisible()
+  await expect(page.getByLabel("Current password", { exact: true })).toHaveCount(0)
+  await page.getByRole("link", { name: "Settings", exact: true }).click()
+  await expect(page.getByRole("heading", { name: "Settings", exact: true })).toBeVisible()
   await expect(page.getByLabel("Current password", { exact: true })).toBeVisible()
   await page.goto("/admin/users")
   await expect(page.getByRole("heading", { name: "User management", exact: true })).toBeVisible()

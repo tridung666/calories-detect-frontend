@@ -1,6 +1,11 @@
 import { expect, type Page } from "@playwright/test"
 
-import type { Meal, MealItem } from "../src/features/meals/types/meal"
+import type {
+  Meal,
+  MealItem,
+  MealPredictionItem,
+  ConfirmedMealItem,
+} from "../src/features/meals/types/meal"
 
 export const TEST_DATE = "2026-09-12"
 export const TEST_PASSWORD = "TestPass123!"
@@ -29,6 +34,7 @@ export const mockApi = async (page: Page, role: "USER" | "ADMIN" = "USER") => {
     status: "ACTIVE",
     createdAt: "2026-09-01T08:00:00",
     updatedAt: "2026-09-12T08:00:00",
+    avatarUrl: null as string | null,
   }
   const state = {
     refreshToken: null as string | null,
@@ -42,6 +48,20 @@ export const mockApi = async (page: Page, role: "USER" | "ADMIN" = "USER") => {
     googleConflict: false,
     googleLinked: false,
     unverified: false,
+    analysisItems: [
+      {
+        name: "Ức gà",
+        estimatedGrams: 150,
+        calories: 248,
+        protein: 46.5,
+        carbohydrate: 0,
+        fat: 5.4,
+        confidence: 0.91,
+      },
+    ] as MealPredictionItem[],
+    analysisError: null as number | null,
+    confirmError: false,
+    imageVersion: 0,
     otp: "123456",
     password: TEST_PASSWORD,
     requests: [] as {
@@ -64,7 +84,11 @@ export const mockApi = async (page: Page, role: "USER" | "ADMIN" = "USER") => {
       const url = new URL(request.url())
       const path = url.pathname.replace(/^\/api/, "")
       const method = request.method()
-      const body = (request.postDataJSON() ?? {}) as Record<string, unknown>
+      const body = (
+        request.headers()["content-type"]?.includes("application/json")
+          ? (request.postDataJSON() ?? {})
+          : {}
+      ) as Record<string, unknown>
       state.requests.push({ method, path, body, authorization: request.headers().authorization })
       const reply = (
         data: unknown,
@@ -180,7 +204,7 @@ export const mockApi = async (page: Page, role: "USER" | "ADMIN" = "USER") => {
           ),
         )
       }
-      if (path === "/meal/create") {
+      if (path === "/meal" && method === "POST") {
         const meal = {
           id: Math.max(0, ...state.meals.map((entry) => entry.id)) + 1,
           ...body,
@@ -188,6 +212,52 @@ export const mockApi = async (page: Page, role: "USER" | "ADMIN" = "USER") => {
         state.meals.push(meal)
         state.items[meal.id] = []
         return reply(meal)
+      }
+      if (path === "/users/me/avatar" && method === "DELETE") {
+        user.avatarUrl = null
+        return reply(user)
+      }
+      const action = path.match(/^\/meals\/(\d+)\/(image|analyze|confirm-analysis)$/)
+      if (action) {
+        const mealId = Number(action[1])
+        const meal = state.meals.find((entry) => entry.id === mealId)
+        if (!meal) return reply(null, 404, 14000)
+        if (action[2] === "image") {
+          meal.imageUrl =
+            method === "DELETE"
+              ? null
+              : `https://images.example.test/meal-${mealId}-${++state.imageVersion}.png`
+          return reply(meal)
+        }
+        if (action[2] === "analyze") {
+          if (!meal.imageUrl) return reply(null, 400, 16000)
+          if (state.analysisError)
+            return reply(
+              null,
+              (
+                { 16001: 503, 16002: 504, 16003: 502, 16004: 422, 16005: 422 } as Record<
+                  number,
+                  number
+                >
+              )[state.analysisError],
+              state.analysisError,
+            )
+          return reply({ mealId, items: state.analysisItems })
+        }
+        if (state.confirmError) return reply(null, 400, 400)
+        const items = body.items as ConfirmedMealItem[]
+        let nextId = Math.max(0, ...(state.items[mealId] ?? []).map((item) => item.id))
+        state.items[mealId] = items.map((item) => ({
+          id: ++nextId,
+          mealId,
+          inputName: item.name,
+          quantityGrams: item.quantityGrams,
+          calories: item.calories,
+          proteinGrams: item.protein,
+          carbohydrateGrams: item.carbohydrate,
+          fatGrams: item.fat,
+        }))
+        return reply({ ...meal, items: state.items[mealId] })
       }
       const match = path.match(/^\/meal\/(\d+)(?:\/items(?:\/(\d+))?)?$/)
       if (match) {

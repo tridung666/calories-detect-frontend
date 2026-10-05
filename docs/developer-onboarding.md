@@ -243,7 +243,7 @@ không gọi Axios trực tiếp, không tạo Axios instance riêng cho từng 
 | ---------- | ------------------------------------------------------------------------------------------------------------------------ |
 | Auth       | `POST /auth/login`, `/auth/register`, `/auth/google`, `/auth/refresh-token`, `/auth/logout`; `PUT /auth/change-password` |
 | Profile    | `GET /user/{id}`                                                                                                         |
-| Meals      | `GET /meal`, `POST /meal/create`; `GET`, `PUT`, `DELETE /meal/{id}`                                                      |
+| Meals      | `GET /meal`, `POST /meal`; `GET`, `PUT`, `DELETE /meal/{id}`                                                      |
 | Meal items | `GET`, `POST /meal/{mealId}/items`; `PUT`, `DELETE /meal/{mealId}/items/{itemId}`                                        |
 | Admin      | `GET`, `POST /admin/users`                                                                                               |
 

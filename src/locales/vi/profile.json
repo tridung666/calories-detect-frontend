@@ -1,5 +1,5 @@
 {
-  "description": "Thông tin cá nhân và bảo mật tài khoản của bạn.",
+  "description": "Thông tin cá nhân và ảnh đại diện của bạn.",
   "personalInformation": "Thông tin cá nhân",
   "active": "Đang hoạt động",
   "joinedAt": "Ngày tham gia",
@@ -17,7 +17,7 @@
     "codeSent": "Đã gửi mã đổi mật khẩu. Vui lòng kiểm tra email.",
     "confirmTitle": "Xác nhận đổi mật khẩu",
     "confirmDescription": "Dùng mã đổi mật khẩu được gửi đến email tài khoản và chọn mật khẩu mới.",
-    "localOnly": "Chưa có mật khẩu riêng? Chọn “Đặt mật khẩu lần đầu” trong phần tài khoản.",
+    "localOnly": "Chưa có mật khẩu riêng? Chọn “Đặt mật khẩu lần đầu” bên dưới.",
     "signOutNotice": "Bạn sẽ được đăng xuất sau khi đổi mật khẩu. Hãy đăng nhập lại bằng mật khẩu mới.",
     "newCodeHint": "Bạn có thể yêu cầu gửi lại mã qua email khi mã hết hạn hoặc hết lượt thử.",
     "startAgain": "Yêu cầu mã mới / quay lại tài khoản",
@@ -36,5 +36,14 @@
     "description": "Chọn tài khoản Google có email {{email}} để thêm phương thức đăng nhập.",
     "success": "Đã liên kết Google. Bạn có thể đăng nhập bằng Google hoặc phương thức hiện tại.",
     "conflict": "Không thể liên kết. Hãy chọn đúng tài khoản Google có email đang dùng trong ứng dụng. Tài khoản Google có thể đã liên kết với tài khoản khác."
-  }
+  },
+  "avatar": {
+    "label": "Ảnh đại diện",
+    "success": "Đã cập nhật ảnh đại diện.",
+    "remove": "Xóa ảnh đại diện",
+    "deleteTitle": "Xóa ảnh đại diện?",
+    "deleteDescription": "Ảnh đại diện sẽ được thay bằng chữ cái từ tên của bạn.",
+    "deleted": "Đã xóa ảnh đại diện."
+  },
+  "settingsDescription": "Quản lý mật khẩu và phương thức đăng nhập của bạn."
 }

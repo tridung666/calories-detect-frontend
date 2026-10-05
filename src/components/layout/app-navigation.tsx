@@ -6,7 +6,7 @@ import { Brand } from "@/components/layout/brand"
 import { Button } from "@/components/ui/button"
 import { useLogout } from "@/features/auth/hooks/use-auth-mutations"
 import { useProfile } from "@/features/profile/hooks/use-profile"
-import { getInitials } from "@/lib/format"
+import { UserAvatar } from "@/features/profile/components/user-avatar"
 import { cn } from "@/lib/utils"
 
 export const AppNavigation = ({ onNavigate }: { onNavigate?: () => void }) => {
@@ -56,12 +56,10 @@ export const AppNavigation = ({ onNavigate }: { onNavigate?: () => void }) => {
           onClick={onNavigate}
           className="flex min-w-0 items-center gap-3 rounded-lg p-2 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
         >
-          <span
-            aria-hidden="true"
-            className="flex size-9 shrink-0 items-center justify-center rounded-lg border bg-muted text-xs font-semibold"
-          >
-            {profile ? getInitials(profile.fullName) : <UserRound className="size-4" />}
-          </span>
+          <UserAvatar
+            name={profile?.fullName ?? t("common:navigation.yourAccount")}
+            url={profile?.avatarUrl}
+          />
           <div className="min-w-0">
             <p className="truncate text-sm font-medium">
               {profile?.fullName ?? t("common:navigation.yourAccount")}

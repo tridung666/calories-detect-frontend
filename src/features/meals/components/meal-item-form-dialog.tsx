@@ -43,17 +43,14 @@ export const MealItemFormDialog = ({
     formState: { errors },
   } = useForm<MealItemFormValues>({
     resolver: zodResolver(mealItemSchema),
-    defaultValues: item
-      ? { ...item, normalizedName: item.normalizedName ?? "" }
-      : {
-          inputName: "",
-          normalizedName: "",
-          quantityGrams: 100,
-          calories: 0,
-          proteinGrams: 0,
-          carbohydrateGrams: 0,
-          fatGrams: 0,
-        },
+    defaultValues: item ?? {
+      inputName: "",
+      quantityGrams: 100,
+      calories: 0,
+      proteinGrams: 0,
+      carbohydrateGrams: 0,
+      fatGrams: 0,
+    },
   })
   return (
     <Dialog
@@ -70,15 +67,7 @@ export const MealItemFormDialog = ({
         <form
           noValidate
           className="space-y-6"
-          onSubmit={handleSubmit((values) =>
-            mutation.mutate(
-              {
-                ...values,
-                normalizedName: values.normalizedName || null,
-              },
-              { onSuccess: onClose },
-            ),
-          )}
+          onSubmit={handleSubmit((values) => mutation.mutate(values, { onSuccess: onClose }))}
         >
           <fieldset disabled={mutation.isPending} className="space-y-4">
             <FormInput
@@ -87,13 +76,6 @@ export const MealItemFormDialog = ({
               placeholder={t("meals:items.namePlaceholder")}
               error={errors.inputName?.message}
               {...register("inputName")}
-            />
-            <FormInput
-              id="item-normalized-name"
-              label={t("meals:items.normalizedName")}
-              placeholder={t("meals:items.normalizedPlaceholder")}
-              error={errors.normalizedName?.message}
-              {...register("normalizedName")}
             />
             <FormInput
               id="quantity"
@@ -112,7 +94,7 @@ export const MealItemFormDialog = ({
                   label={label}
                   type="number"
                   min="0"
-                  step="1"
+                  step="0.01"
                   error={errors[name]?.message}
                   {...register(name, { valueAsNumber: true })}
                 />

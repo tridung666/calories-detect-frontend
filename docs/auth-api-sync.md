@@ -60,7 +60,10 @@ with HTTP fallbacks for security responses that have empty or nonstandard bodies
 
 ## Account actions
 
-- Account security displays change password, set first password, and link Google.
+- The header's settings gear opens `/settings`, which displays change password,
+  set first password, and link Google. `/profile` displays personal information
+  and avatar upload. `/settings/change-password` opens the dedicated password
+  flow; `/profile/change-password` redirects there for existing links.
   The profile API has no provider metadata. The UI never infers providers from
   the last login method and does not request nonexistent provider APIs.
 - Set password sends only newPassword/confirmPassword; it requires no OTP or
