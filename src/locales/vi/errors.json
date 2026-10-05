@@ -25,5 +25,9 @@
   "localPasswordRequired": "Tài khoản chưa có mật khẩu riêng. Hãy đặt mật khẩu lần đầu trong phần tài khoản.",
   "otpRateLimited": "Vui lòng chờ 60 giây giữa các lần yêu cầu. Tối đa 5 mã mỗi giờ; hãy thử lại sau nếu đã đạt giới hạn.",
   "invalidNewPassword": "Mật khẩu phải có 8–72 ký tự và không quá 72 byte UTF-8.",
-  "localPasswordExists": "Tài khoản đã có mật khẩu. Hãy dùng đổi mật khẩu hoặc quên mật khẩu."
+  "localPasswordExists": "Tài khoản đã có mật khẩu. Hãy dùng đổi mật khẩu hoặc quên mật khẩu.",
+  "invalidImage": "Vui lòng chọn ảnh JPEG, PNG hoặc WebP không rỗng.",
+  "imageTooLarge": "Ảnh không được vượt quá 5 MiB.",
+  "imageUploadFailed": "Chưa thể tải ảnh lên. Vui lòng thử lại.",
+  "imageDeleteFailed": "Chưa thể xóa ảnh. Vui lòng thử lại."
 }

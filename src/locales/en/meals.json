@@ -83,5 +83,14 @@
     "itemCreated": "Food added",
     "itemUpdated": "Food updated",
     "itemDeleted": "Food deleted"
+  },
+  "image": {
+    "title": "Meal image",
+    "label": "Choose meal image",
+    "success": "Meal image updated.",
+    "remove": "Delete meal photo",
+    "deleteTitle": "Delete meal photo?",
+    "deleteDescription": "The photo will be deleted. Foods already saved in this meal will be kept.",
+    "deleted": "Meal photo deleted."
   }
 }

@@ -28,6 +28,10 @@ const businessMessages: Partial<Record<number, ErrorKey>> = {
   13002: "sessionExpired",
   14000: "mealNotFound",
   14002: "foodNotFound",
+  15000: "invalidImage",
+  15001: "imageTooLarge",
+  15002: "imageUploadFailed",
+  15003: "imageDeleteFailed",
 }
 
 const statusMessages: Partial<Record<number, ErrorKey>> = {
@@ -36,6 +40,7 @@ const statusMessages: Partial<Record<number, ErrorKey>> = {
   403: "forbidden",
   404: "notFound",
   409: "conflict",
+  413: "imageTooLarge",
   429: "tooManyRequests",
 }
 

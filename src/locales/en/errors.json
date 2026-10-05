@@ -25,5 +25,9 @@
   "localPasswordRequired": "This account has no local password. Set your first password in your account.",
   "otpRateLimited": "Please wait 60 seconds between requests. You can receive up to 5 codes per hour; try again later if that limit is reached.",
   "invalidNewPassword": "Password must be 8–72 characters and at most 72 UTF-8 bytes.",
-  "localPasswordExists": "This account already has a password. Use change password or forgot password."
+  "localPasswordExists": "This account already has a password. Use change password or forgot password.",
+  "invalidImage": "Choose a non-empty JPEG, PNG or WebP image.",
+  "imageTooLarge": "Image must not exceed 5 MiB.",
+  "imageUploadFailed": "Unable to upload the image. Please try again.",
+  "imageDeleteFailed": "Unable to delete the image. Please try again."
 }

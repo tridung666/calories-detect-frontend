@@ -36,5 +36,13 @@
     "description": "Chọn tài khoản Google có email {{email}} để thêm phương thức đăng nhập.",
     "success": "Đã liên kết Google. Bạn có thể đăng nhập bằng Google hoặc phương thức hiện tại.",
     "conflict": "Không thể liên kết. Hãy chọn đúng tài khoản Google có email đang dùng trong ứng dụng. Tài khoản Google có thể đã liên kết với tài khoản khác."
+  },
+  "avatar": {
+    "label": "Ảnh đại diện",
+    "success": "Đã cập nhật ảnh đại diện.",
+    "remove": "Xóa ảnh đại diện",
+    "deleteTitle": "Xóa ảnh đại diện?",
+    "deleteDescription": "Ảnh đại diện sẽ được thay bằng chữ cái từ tên của bạn.",
+    "deleted": "Đã xóa ảnh đại diện."
   }
 }

@@ -83,5 +83,14 @@
     "itemCreated": "Đã thêm món ăn",
     "itemUpdated": "Đã cập nhật món ăn",
     "itemDeleted": "Đã xóa món ăn"
+  },
+  "image": {
+    "title": "Ảnh bữa ăn",
+    "label": "Chọn ảnh bữa ăn",
+    "success": "Đã cập nhật ảnh bữa ăn.",
+    "remove": "Xóa ảnh bữa ăn",
+    "deleteTitle": "Xóa ảnh bữa ăn?",
+    "deleteDescription": "Ảnh sẽ bị xóa. Các món đã lưu trong bữa ăn vẫn được giữ.",
+    "deleted": "Đã xóa ảnh bữa ăn."
   }
 }

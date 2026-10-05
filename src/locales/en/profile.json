@@ -36,5 +36,13 @@
     "description": "Choose the Google account with email {{email}} to add this sign-in method.",
     "success": "Google linked. You can use Google or your existing sign-in method.",
     "conflict": "Unable to link. Choose the Google account matching your app email. It may already be linked to another account."
+  },
+  "avatar": {
+    "label": "Profile photo",
+    "success": "Profile photo updated.",
+    "remove": "Delete profile photo",
+    "deleteTitle": "Delete profile photo?",
+    "deleteDescription": "Your profile photo will be replaced with initials from your name.",
+    "deleted": "Profile photo deleted."
   }
 }

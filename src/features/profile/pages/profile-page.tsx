@@ -5,11 +5,12 @@ import { PageHeader } from "@/components/layout/page-header"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ErrorState, PageLoading } from "@/components/ui/feedback"
+import { useProfile } from "@/features/profile/hooks/use-profile"
 import { GoogleLinkCard } from "@/features/profile/components/google-link-card"
 import { SetPasswordForm } from "@/features/profile/components/set-password-form"
 import { ChangePasswordForm } from "@/features/profile/components/change-password-form"
-import { useProfile } from "@/features/profile/hooks/use-profile"
-import { formatDate, getInitials } from "@/lib/format"
+import { AvatarUpload } from "@/features/profile/components/avatar-upload"
+import { formatDate } from "@/lib/format"
 
 export const ProfilePage = () => {
   const { t } = useTranslation(["common", "profile"])
@@ -28,9 +29,6 @@ export const ProfilePage = () => {
           </CardHeader>
           <CardContent className="space-y-6 px-6">
             <div className="flex items-center gap-4">
-              <span className="flex size-16 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xl font-semibold text-primary">
-                {getInitials(profile.fullName)}
-              </span>
               <div className="min-w-0">
                 <h2 className="text-lg font-semibold wrap-break-word">{profile.fullName}</h2>
                 <Badge className="mt-2" variant="secondary">
@@ -39,6 +37,7 @@ export const ProfilePage = () => {
                 </Badge>
               </div>
             </div>
+            <AvatarUpload key={profile.id} profile={profile} />
             <dl className="divide-y">
               {[
                 { label: t("common:fields.email"), value: profile.email },

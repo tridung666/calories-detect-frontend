@@ -2,7 +2,7 @@ import type { PageParams } from "@/lib/api/api-types"
 
 export const mealTypes = ["BREAKFAST", "LUNCH", "DINNER", "SNACK"] as const
 export type MealType = (typeof mealTypes)[number]
-export type Meal = { id: number; mealType: MealType; mealDate: string }
+export type Meal = { id: number; mealType: MealType; mealDate: string; imageUrl?: string | null }
 export type MealRequest = Omit<Meal, "id">
 export type MealFilters = PageParams & { mealDate?: string; mealType?: MealType }
 

@@ -98,5 +98,12 @@
   "routeError": {
     "title": "Trang chưa thể hiển thị",
     "description": "Đã có lỗi khi mở trang. Vui lòng tải lại để tiếp tục."
+  },
+  "image": {
+    "hint": "JPEG, PNG hoặc WebP, tối đa 5 MiB.",
+    "upload": "Tải ảnh lên",
+    "selected": "Đã chọn: {{name}}",
+    "empty": "Chưa có ảnh bữa ăn. Chọn ảnh để thêm.",
+    "unavailable": "Không thể hiển thị ảnh."
   }
 }

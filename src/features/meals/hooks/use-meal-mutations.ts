@@ -8,6 +8,8 @@ import {
   deleteMealItem,
   updateMeal,
   updateMealItem,
+  uploadMealImage,
+  deleteMealImage,
 } from "@/features/meals/api/meals-api"
 import { mealKeys } from "@/features/meals/hooks/use-meals"
 import type { MealItemRequest, MealRequest } from "@/features/meals/types/meal"
@@ -21,6 +23,34 @@ const useMealInvalidation = () => {
       client.invalidateQueries({ queryKey: ["dashboard"] }),
     ])
   }
+}
+
+export const useUploadMealImage = (mealId: number) => {
+  const client = useQueryClient()
+  const invalidate = useMealInvalidation()
+  return useMutation({
+    mutationFn: (file: File) => uploadMealImage(mealId, file),
+    onSuccess: async (meal) => {
+      await client.cancelQueries({ queryKey: mealKeys.detail(mealId), exact: true })
+      client.setQueryData(mealKeys.detail(mealId), meal)
+      notification.success(i18n.t("meals:image.success"))
+      await invalidate()
+    },
+  })
+}
+
+export const useDeleteMealImage = (mealId: number) => {
+  const client = useQueryClient()
+  const invalidate = useMealInvalidation()
+  return useMutation({
+    mutationFn: () => deleteMealImage(mealId),
+    onSuccess: async (meal) => {
+      await client.cancelQueries({ queryKey: mealKeys.detail(mealId), exact: true })
+      client.setQueryData(mealKeys.detail(mealId), meal)
+      notification.success(i18n.t("meals:image.deleted"))
+      await invalidate()
+    },
+  })
 }
 
 export const useSaveMeal = (id?: number) => {

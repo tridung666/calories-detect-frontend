@@ -29,6 +29,7 @@ export const mockApi = async (page: Page, role: "USER" | "ADMIN" = "USER") => {
     status: "ACTIVE",
     createdAt: "2026-09-01T08:00:00",
     updatedAt: "2026-09-12T08:00:00",
+    avatarUrl: null as string | null,
   }
   const state = {
     refreshToken: null as string | null,
@@ -64,7 +65,11 @@ export const mockApi = async (page: Page, role: "USER" | "ADMIN" = "USER") => {
       const url = new URL(request.url())
       const path = url.pathname.replace(/^\/api/, "")
       const method = request.method()
-      const body = (request.postDataJSON() ?? {}) as Record<string, unknown>
+      const body = (
+        request.headers()["content-type"]?.includes("application/json")
+          ? (request.postDataJSON() ?? {})
+          : {}
+      ) as Record<string, unknown>
       state.requests.push({ method, path, body, authorization: request.headers().authorization })
       const reply = (
         data: unknown,
@@ -180,7 +185,7 @@ export const mockApi = async (page: Page, role: "USER" | "ADMIN" = "USER") => {
           ),
         )
       }
-      if (path === "/meal/create") {
+      if (path === "/meal" && method === "POST") {
         const meal = {
           id: Math.max(0, ...state.meals.map((entry) => entry.id)) + 1,
           ...body,

@@ -8,6 +8,16 @@ import type {
 import type { ApiSuccessResponse, BackendPageResponse } from "@/lib/api/api-types"
 import { normalizePage, toPageParams } from "@/lib/api/pagination"
 import { apiClient } from "@/lib/axios"
+import { imageFormData, imageUploadConfig } from "@/lib/api/image-upload"
+
+export const uploadMealImage = async (mealId: number, file: File) => {
+  const response = await apiClient.put<ApiSuccessResponse<Meal>>(
+    `/meals/${mealId}/image`,
+    imageFormData(file),
+    imageUploadConfig,
+  )
+  return response.data.data
+}
 
 export const getMeals = async ({ page, size, ...filters }: MealFilters, signal?: AbortSignal) => {
   const response = await apiClient.get<ApiSuccessResponse<BackendPageResponse<Meal>>>("/meal", {
@@ -23,7 +33,12 @@ export const getMeal = async (id: number, signal?: AbortSignal) => {
 }
 
 export const createMeal = async (payload: MealRequest) => {
-  const response = await apiClient.post<ApiSuccessResponse<Meal>>("/meal/create", payload)
+  const response = await apiClient.post<ApiSuccessResponse<Meal>>("/meal", payload)
+  return response.data.data
+}
+
+export const deleteMealImage = async (mealId: number) => {
+  const response = await apiClient.delete<ApiSuccessResponse<Meal>>(`/meals/${mealId}/image`)
   return response.data.data
 }
 
