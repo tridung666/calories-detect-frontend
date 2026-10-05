@@ -38,17 +38,19 @@ it("sends authenticated multipart files to both image endpoints and unwraps the 
   expect(paths).toEqual(["/users/me/avatar", "/meals/42/image"])
 })
 
-it("accepts backend image types up to 5 MiB and rejects empty, oversized or unsupported files", () => {
+it("accepts backend image types up to 10 MiB and rejects empty, oversized or unsupported files", () => {
+  expect(maxImageBytes).toBe(10 * 1024 * 1024)
   for (const type of ["image/jpeg", "image/png", "image/webp"]) {
-    expect(
-      imageFileSchema.safeParse(new File([new Uint8Array(maxImageBytes)], "image", { type }))
-        .success,
-    ).toBe(true)
+    for (const size of [5 * 1024 * 1024 + 1, 10 * 1024 * 1024]) {
+      expect(
+        imageFileSchema.safeParse(new File([new Uint8Array(size)], "image", { type })).success,
+      ).toBe(true)
+    }
   }
   for (const file of [
     new File([], "empty.png", { type: "image/png" }),
     new File(["gif"], "image.gif", { type: "image/gif" }),
-    new File([new Uint8Array(maxImageBytes + 1)], "large.png", { type: "image/png" }),
+    new File([new Uint8Array(10 * 1024 * 1024 + 1)], "large.png", { type: "image/png" }),
   ])
     expect(imageFileSchema.safeParse(file).success).toBe(false)
 })

@@ -102,7 +102,7 @@
     "description": "Something went wrong while opening this page. Please reload to continue."
   },
   "image": {
-    "hint": "JPEG, PNG or WebP, up to 5 MiB.",
+    "hint": "JPEG, PNG or WebP, up to 10 MiB.",
     "upload": "Upload image",
     "selected": "Selected: {{name}}",
     "empty": "No meal image yet. Choose an image to add one.",

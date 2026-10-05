@@ -56,7 +56,7 @@ gửi khi confirm. Món đã lưu dùng `inputName`, `proteinGrams`,
 Tên bắt buộc, tối đa 255 ký tự. Khối lượng dương, tối đa 99999999.99 g. Các số
 dinh dưỡng không âm, tối đa 2147483647 và tối đa hai chữ số thập phân. Dinh dưỡng
 là tổng cho khẩu phần, không phải trên 100 g. Form nhập món thủ công cũng dùng
-validation thập phân này. Ảnh hỗ trợ JPEG/PNG/WebP, tối đa 5 MiB.
+validation thập phân này. Ảnh hỗ trợ JPEG/PNG/WebP, tối đa 10 MiB.
 
 Mã lỗi AI 16000–16005 được dịch theo ngôn ngữ hiện tại, gồm chưa có ảnh,
 service không sẵn sàng, timeout, kết quả sai, không có món và không đọc được ảnh.
