@@ -1,7 +1,7 @@
 import { useState } from "react"
 
-import { Menu } from "lucide-react"
-import { Outlet, useLocation, useNavigation } from "react-router"
+import { Menu, Settings } from "lucide-react"
+import { NavLink, Outlet, useLocation, useNavigation } from "react-router"
 import { useTranslation } from "react-i18next"
 
 import { AppNavigation } from "@/components/layout/app-navigation"
@@ -27,9 +27,11 @@ export const AppLayout = () => {
     ? t("common:navigation.meals")
     : pathname.startsWith("/profile")
       ? t("common:navigation.profile")
-      : pathname.startsWith("/admin")
-        ? t("common:navigation.admin")
-        : t("common:navigation.dashboard")
+      : pathname.startsWith("/settings")
+        ? t("common:navigation.settings")
+        : pathname.startsWith("/admin")
+          ? t("common:navigation.admin")
+          : t("common:navigation.dashboard")
 
   return (
     <div className="flex min-h-svh">
@@ -73,6 +75,20 @@ export const AppLayout = () => {
             </span>
           </div>
           <div className="flex shrink-0 items-center gap-2">
+            <Button
+              asChild
+              variant="ghost"
+              size="icon"
+              className="size-11 aria-[current=page]:bg-primary/10 aria-[current=page]:text-primary"
+            >
+              <NavLink
+                to="/settings"
+                aria-label={t("common:navigation.settings")}
+                title={t("common:navigation.settings")}
+              >
+                <Settings aria-hidden="true" />
+              </NavLink>
+            </Button>
             <LanguageSwitcher />
             <ModeToggle />
           </div>

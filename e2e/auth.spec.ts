@@ -95,6 +95,8 @@ test("mobile navigation, dark mode and password update work", async ({ page }, t
     .click()
   await expect(page.getByRole("heading", { name: "Tài khoản", exact: true })).toBeVisible()
   await expect(page.getByRole("dialog")).not.toBeVisible()
+  await page.getByRole("link", { name: "Cài đặt", exact: true }).click()
+  await expect(page.getByRole("heading", { name: "Cài đặt", exact: true })).toBeVisible()
   await page.getByLabel("Mật khẩu hiện tại", { exact: true }).fill(TEST_PASSWORD)
   await page.getByRole("button", { name: "Gửi mã xác minh", exact: true }).click()
   await expect(page.getByLabel("Mã xác minh", { exact: true })).toBeVisible()

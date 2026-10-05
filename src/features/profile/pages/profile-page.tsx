@@ -6,9 +6,6 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ErrorState, PageLoading } from "@/components/ui/feedback"
 import { useProfile } from "@/features/profile/hooks/use-profile"
-import { GoogleLinkCard } from "@/features/profile/components/google-link-card"
-import { SetPasswordForm } from "@/features/profile/components/set-password-form"
-import { ChangePasswordForm } from "@/features/profile/components/change-password-form"
 import { AvatarUpload } from "@/features/profile/components/avatar-upload"
 import { formatDate } from "@/lib/format"
 
@@ -22,7 +19,7 @@ export const ProfilePage = () => {
   return (
     <>
       <PageHeader title={t("common:navigation.profile")} description={t("profile:description")} />
-      <div className="grid items-start gap-6 xl:grid-cols-2">
+      <div className="max-w-2xl">
         <Card className="rounded-lg">
           <CardHeader className="px-6">
             <CardTitle>{t("profile:personalInformation")}</CardTitle>
@@ -57,11 +54,6 @@ export const ProfilePage = () => {
             </dl>
           </CardContent>
         </Card>
-        <div className="space-y-6" key={profile.id}>
-          <ChangePasswordForm />
-          <SetPasswordForm email={profile.email} userId={profile.id} />
-          <GoogleLinkCard email={profile.email} userId={profile.id} />
-        </div>
       </div>
     </>
   )

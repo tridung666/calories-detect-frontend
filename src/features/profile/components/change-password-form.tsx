@@ -178,7 +178,7 @@ const AccountPasswordForm = ({ userId, title }: { userId?: number; title: string
         {blocked && (
           <Link
             className="text-sm text-primary hover:underline focus-visible:underline"
-            to="/profile#set-password"
+            to="/settings#set-password"
           >
             {t("profile:setPassword.title")}
           </Link>

@@ -70,6 +70,10 @@ export const appRouter = createBrowserRouter([
           },
           {
             path: "/profile/change-password",
+            element: <Navigate to="/settings/change-password" replace />,
+          },
+          {
+            path: "/settings/change-password",
             lazy: async () => ({
               Component: (await import("@/features/profile/pages/confirm-password-change-page"))
                 .ConfirmPasswordChangePage,
@@ -79,6 +83,12 @@ export const appRouter = createBrowserRouter([
             path: "/profile",
             lazy: async () => ({
               Component: (await import("@/features/profile/pages/profile-page")).ProfilePage,
+            }),
+          },
+          {
+            path: "/settings",
+            lazy: async () => ({
+              Component: (await import("@/features/settings/pages/settings-page")).SettingsPage,
             }),
           },
           {

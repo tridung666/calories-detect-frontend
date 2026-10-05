@@ -97,7 +97,7 @@ export const SetPasswordForm = ({ email, userId }: { email: string; userId: numb
           {exists ? (
             <Link
               className="text-sm text-primary hover:underline focus-visible:underline"
-              to="/profile/change-password"
+              to="/settings/change-password"
             >
               {t("profile:password.title")}
             </Link>

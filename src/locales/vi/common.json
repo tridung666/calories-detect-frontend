@@ -22,7 +22,8 @@
     "backToDashboard": "Về tổng quan",
     "clearFilters": "Xóa bộ lọc",
     "editNamed": "Sửa {{name}}",
-    "deleteNamed": "Xóa {{name}}"
+    "deleteNamed": "Xóa {{name}}",
+    "backToSettings": "Quay lại cài đặt"
   },
   "fields": {
     "email": "Email",
@@ -72,7 +73,8 @@
     "tipTitle": "Bắt đầu từ những điều nhỏ",
     "tipDescription": "Ghi lại bữa ăn đều đặn để hiểu thêm thói quen dinh dưỡng của bạn.",
     "yourAccount": "Tài khoản của bạn",
-    "viewAccount": "Xem thông tin tài khoản"
+    "viewAccount": "Xem thông tin tài khoản",
+    "settings": "Cài đặt"
   },
   "theme": {
     "change": "Đổi giao diện sáng tối",

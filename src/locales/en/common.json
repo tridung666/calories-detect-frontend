@@ -22,7 +22,8 @@
     "backToDashboard": "Back to dashboard",
     "clearFilters": "Clear filters",
     "editNamed": "Edit {{name}}",
-    "deleteNamed": "Delete {{name}}"
+    "deleteNamed": "Delete {{name}}",
+    "backToSettings": "Back to settings"
   },
   "fields": {
     "email": "Email",
@@ -72,7 +73,8 @@
     "tipTitle": "Start with small steps",
     "tipDescription": "Log meals regularly to understand your eating habits.",
     "yourAccount": "Your account",
-    "viewAccount": "View account details"
+    "viewAccount": "View account details",
+    "settings": "Settings"
   },
   "theme": {
     "change": "Change color theme",
