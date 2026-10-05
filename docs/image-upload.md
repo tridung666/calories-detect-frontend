@@ -9,7 +9,7 @@ Contract checked against the local backend's `UserAvatarController`,
 | Replace meal image | `PUT /api/meals/{mealId}/image` | Meal with `imageUrl`  |
 
 Both requests require authentication and multipart form data with one `file` part.
-Accepted types: JPEG, PNG and WebP; non-empty, up to 5 MiB (5,242,880 bytes).
+Accepted types: JPEG, PNG and WebP; non-empty, up to 10 MiB (10,485,760 bytes).
 The browser supplies the multipart boundary; clear Axios's default JSON content
 type for these requests. Upload requests have a 60-second timeout.
 

@@ -7,8 +7,16 @@ const png = Buffer.from(
   "base64",
 )
 const image = { name: "photo.png", mimeType: "image/png", buffer: png }
+const maximumImage = {
+  ...image,
+  buffer: Buffer.concat([png, Buffer.alloc(10 * 1024 * 1024 - png.length)]),
+}
+const phoneImage = {
+  ...image,
+  buffer: Buffer.concat([png, Buffer.alloc(6 * 1024 * 1024 - png.length)]),
+}
 
-test("previews, validates and uploads an avatar, updating navigation and surviving reload", async ({
+test("previews, validates and uploads a 10 MiB avatar, updating navigation and surviving reload", async ({
   page,
 }, testInfo) => {
   const state = await mockApi(page)
@@ -23,6 +31,7 @@ test("previews, validates and uploads an avatar, updating navigation and survivi
     expect(request.headers()["content-type"]).toMatch(/^multipart\/form-data; boundary=/)
     expect(request.headers().authorization).toMatch(/^Bearer /)
     expect(request.postDataBuffer()?.toString()).toContain('name="file"; filename="photo.png"')
+    expect(request.postDataBuffer()?.length).toBeGreaterThan(10 * 1024 * 1024)
     Object.assign(state.users[0], { avatarUrl: savedUrl })
     await route.fulfill({ json: { code: 200, data: state.users[0] } })
   })
@@ -33,18 +42,18 @@ test("previews, validates and uploads an avatar, updating navigation and survivi
   await picker.setInputFiles({
     name: "large.png",
     mimeType: "image/png",
-    buffer: Buffer.alloc(5 * 1024 * 1024 + 1),
+    buffer: Buffer.alloc(10 * 1024 * 1024 + 1),
   })
-  await expect(page.getByRole("alert")).toContainText("5 MiB")
+  await expect(page.getByRole("alert")).toContainText("10 MiB")
   expect(uploads).toBe(0)
-  await picker.setInputFiles(image)
+  await picker.setInputFiles(maximumImage)
   await expect(page.getByRole("img", { name: "Ảnh đại diện", exact: true })).toHaveAttribute(
     "src",
     /^blob:/,
   )
   await page.getByRole("button", { name: "Hủy", exact: true }).click()
   await expect(page.getByRole("button", { name: "Tải ảnh lên" })).toHaveCount(0)
-  await picker.setInputFiles(image)
+  await picker.setInputFiles(maximumImage)
   await page.getByRole("button", { name: "Tải ảnh lên" }).click()
   await expect(page.getByRole("img", { name: "Ảnh đại diện", exact: true })).toHaveAttribute(
     "src",
@@ -65,7 +74,7 @@ test("previews, validates and uploads an avatar, updating navigation and survivi
   )
 })
 
-test("meal image failures allow retry, pending prevents duplicates, replacement persists", async ({
+test("6 MiB meal image failures allow retry, pending prevents duplicates, replacement persists", async ({
   page,
 }, testInfo) => {
   const state = await mockApi(page)
@@ -84,6 +93,7 @@ test("meal image failures allow retry, pending prevents duplicates, replacement 
     uploads++
     expect(route.request().method()).toBe("PUT")
     expect(route.request().headers()["content-type"]).toMatch(/^multipart\/form-data; boundary=/)
+    expect(route.request().postDataBuffer()?.length).toBeGreaterThan(6 * 1024 * 1024)
     if (uploads === 1)
       return route.fulfill({ status: 500, json: { code: 15002, message: "Failure" } })
     await held
@@ -94,7 +104,7 @@ test("meal image failures allow retry, pending prevents duplicates, replacement 
   const picker = page.getByLabel("Chọn ảnh bữa ăn", { exact: true }).and(page.locator("input"))
   const preview = page.getByRole("img", { name: "Chọn ảnh bữa ăn", exact: true })
   await expect(preview).toHaveAttribute("src", oldUrl)
-  await picker.setInputFiles(image)
+  await picker.setInputFiles(phoneImage)
   await page.getByRole("button", { name: "Tải ảnh lên" }).click()
   await expect(page.getByRole("alert")).toContainText("Chưa thể tải ảnh lên")
   expect(state.meals[0].imageUrl).toBe(oldUrl)
