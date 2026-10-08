@@ -28,6 +28,7 @@
   "localPasswordExists": "This account already has a password. Use change password or forgot password.",
   "invalidImage": "Choose a non-empty JPEG, PNG or WebP image.",
   "imageTooLarge": "Image must not exceed 10 MiB.",
+  "imageProcessingFailed": "Unable to compress the image. Select it again or try another image.",
   "imageUploadFailed": "Unable to upload the image. Please try again.",
   "imageDeleteFailed": "Unable to delete the image. Please try again.",
   "mealImageRequired": "Upload a meal photo before analyzing.",

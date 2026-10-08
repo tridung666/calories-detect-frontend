@@ -44,7 +44,8 @@ export const ImageUpload = ({
 }: ImageUploadProps) => {
   const { t } = useTranslation(["common", "errors"])
   const id = useId()
-  const { selection, error: validationError, select, clear } = useImageSelection()
+  const { selection, error: validationError, processing, select, clear } = useImageSelection()
+  const busy = pending || processing
   const previewUrl = selection?.url ?? currentUrl
   const clearSelection = () => {
     clear()
@@ -54,10 +55,10 @@ export const ImageUpload = ({
     <form
       className="space-y-4"
       aria-label={label}
-      aria-busy={pending}
+      aria-busy={busy}
       onSubmit={(event) => {
         event.preventDefault()
-        if (selection && !pending && !disabled) onUpload(selection.file, clearSelection)
+        if (selection && !busy && !disabled) onUpload(selection.file, clearSelection)
       }}
     >
       <div
@@ -88,22 +89,28 @@ export const ImageUpload = ({
             id={id}
             type="file"
             accept={imageAccept}
-            disabled={pending || disabled}
+            disabled={busy || disabled}
             aria-invalid={Boolean(validationError)}
             aria-describedby={`${id}-hint${validationError ? ` ${id}-error` : ""}`}
-            onChange={(event) => {
+            onChange={async (event) => {
               const file = event.currentTarget.files?.[0]
               event.currentTarget.value = ""
               if (file) {
                 onReset()
-                const selected = select(file)
-                onSelectionChange?.(selected)
+                onSelectionChange?.(true)
+                const selected = await select(file)
+                if (selected !== null) onSelectionChange?.(selected)
               }
             }}
           />
           <p id={`${id}-hint`} className="text-xs text-muted-foreground">
             {t("common:image.hint")}
           </p>
+          {processing && (
+            <p role="status" className="text-sm text-muted-foreground">
+              {t("common:image.processing")}
+            </p>
+          )}
           {validationError && (
             <p id={`${id}-error`} role="alert" className="text-sm text-destructive">
               {t(`errors:${validationError}`)}
@@ -118,14 +125,14 @@ export const ImageUpload = ({
       </div>
       {selection && (
         <div className="flex flex-wrap gap-2">
-          <SubmitButton pending={pending} disabled={disabled}>
+          <SubmitButton pending={busy} disabled={disabled}>
             <Upload />
             {t("common:image.upload")}
           </SubmitButton>
           <Button
             type="button"
             variant="outline"
-            disabled={pending || disabled}
+            disabled={busy || disabled}
             onClick={() => {
               clearSelection()
               onReset()
@@ -136,7 +143,7 @@ export const ImageUpload = ({
         </div>
       )}
       {!selection && currentUrl && onRemove && (
-        <Button type="button" variant="outline" disabled={pending || disabled} onClick={onRemove}>
+        <Button type="button" variant="outline" disabled={busy || disabled} onClick={onRemove}>
           <Trash2 />
           {removeLabel}
         </Button>
